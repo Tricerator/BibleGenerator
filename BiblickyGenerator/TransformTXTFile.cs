@@ -12,7 +12,7 @@ namespace BiblickyGenerator
     /// dangerous symbol gets blanks around it
     /// 
     /// </summary>
-    class TransformTXTFile
+    public class TransformTXTFile
     {
         private static char[] bannedChars = { '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
                                '-', '.', ',','/','\\','\'','"',';','}',']','{','[','|','?','>','<'
@@ -41,6 +41,41 @@ namespace BiblickyGenerator
             else return "" + oneChar;
         }
 
+        public static string TransformString(string line)
+        {
+            if (line.Length == 0) return "";
+            StringBuilder sb = new StringBuilder(line[0]);
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (bannedChars.Contains(line[i]))
+                {
+                    sb.Append(" " + line[i] + " ");
+                }
+                else sb.Append(line[i]);
+            }
+            return sb.ToString();
+
+        }
+        public static string TransformStringBack(string line)
+        {
+            if (line.Length == 0) return "";
+            StringBuilder sb = new StringBuilder(line[0]);
+            for (int i = 0; i < line.Length - 1; i++)
+            {
+                if (bannedChars.Contains(line[i + 1]))
+                {
+                    sb.Append(line[i + 1]);
+                    i++;
+                    i++;
+                }
+                else
+                {
+                    sb.Append(line[i]);
+                }
+            }
+            return sb.ToString();
+        }
+
         public static void TransformFile(string file)
         {
 
@@ -51,64 +86,74 @@ namespace BiblickyGenerator
             FillDictionaryOfNames(file);
 
 
-            string result = "..\\..\\SourceTXTFiles\\" + basenameOfFileWithoutExtensions + "_model.txt";
+            string result = "..\\..\\SourceTXTFiles\\" + basenameOfFileWithoutExtensions + ".txt";
             if (File.Exists(result))
             {
                 int i = 1;
                 while (File.Exists(result))
                 {
-                    result = "..\\..\\SourceTXTFiles\\" + basenameOfFileWithoutExtensions + "_" + i +  "_model.txt";
+                    result = "..\\..\\SourceTXTFiles\\" + basenameOfFileWithoutExtensions + "_" + i + "_.txt";
                     i++;
                 }
 
             }
 
-
-            using (StreamReader MyStreamReader = new StreamReader(file))
+            try
             {
-                using (StreamWriter MyStreamWriter = new StreamWriter(result))
-                {
-                    char oneChar;
-                    StringBuilder sb = new StringBuilder();
 
-                    while (MyStreamReader.Peek() >= 0)
+                using (StreamReader MyStreamReader = new StreamReader(file))
+                {
+                    using (StreamWriter MyStreamWriter = new StreamWriter(result))
                     {
 
-                        oneChar = (char)MyStreamReader.Read();
-                        if (bigCzechChars.Contains(oneChar) ||
-                                   smallCzechChars.Contains(oneChar) ||
-                                           numbers.Contains(oneChar))
+                        char oneChar;
+                        StringBuilder sb = new StringBuilder();
+
+                        while (MyStreamReader.Peek() >= 0)
                         {
-                            sb.Append(oneChar);
-                        }
-                        else
-                        {
-                            string word = sb.ToString();
-                            sb.Clear();
-                            if (word.Length == 0)
+
+                            oneChar = (char)MyStreamReader.Read();
+                            if (bigCzechChars.Contains(oneChar) ||
+                                       smallCzechChars.Contains(oneChar) ||
+                                               numbers.Contains(oneChar))
                             {
-                                MyStreamWriter.Write(ModifyDangerousSymbols(oneChar));
-                            }
-                            else if (word[0] <= 'Z' && word[0] >= 'A')
-                            {
-                                if (dictThisWordIsName[word.ToLower()])
-                                {
-                                    MyStreamWriter.Write(word);
-                                }
-                                else
-                                {
-                                    MyStreamWriter.Write(word.ToLower());
-                                }
+                                sb.Append(oneChar);
                             }
                             else
                             {
-                                MyStreamWriter.Write(word);
-                            }
-                            MyStreamWriter.Write(ModifyDangerousSymbols(oneChar));
-                        }
-                    }
+                                string word = sb.ToString();
+                                sb.Clear();
+                                if (word.Length == 0)
+                                {
+                                    MyStreamWriter.Write(ModifyDangerousSymbols(oneChar));
+                                }
+                                else if (word[0] <= 'Z' && word[0] >= 'A')
+                                {
+                                    if (dictThisWordIsName.ContainsKey(word.ToLower()) && dictThisWordIsName[word.ToLower()])
+                                    {
+                                        MyStreamWriter.Write(word);
+                                    }
+                                    else
+                                    {
+                                        MyStreamWriter.Write(word.ToLower());
+                                    }
+                                }
+                                else
+                                {
+                                    MyStreamWriter.Write(word);
+                                }
+                                MyStreamWriter.Write(ModifyDangerousSymbols(oneChar));
 
+                            }
+
+                        }
+
+                    }
                 }
+
+            }
+            catch (System.Text.EncoderFallbackException)
+            {
 
             }
 
@@ -130,7 +175,8 @@ namespace BiblickyGenerator
                         if (word.Length == 0 || !bigCzechChars.Contains(word[0])) continue;
                         else
                         {
-                            dictThisWordIsName.Add(word.ToLower(), true);
+                            if (!dictThisWordIsName.ContainsKey(word.ToLower()))
+                                dictThisWordIsName.Add(word.ToLower(), true);
                         }
                     }
                     else sb.Append(c);

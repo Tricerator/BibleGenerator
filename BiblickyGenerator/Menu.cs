@@ -32,5 +32,18 @@ namespace BiblickyGenerator
         {
             Application.Exit();
         }
+
+        private void button_INLINE_W2V_Click(object sender, EventArgs e)
+        {
+            Inline_paraphrasing inlineP = new Inline_paraphrasing();
+            Hide();
+            inlineP.ShowDialog();
+            Show();
+        }
+
+        private void button_W2V_Transform_File_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

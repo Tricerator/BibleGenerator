@@ -6,6 +6,10 @@ using System.Windows.Forms;
 
 namespace BiblickyGenerator
 {
+        /// <summary>
+        /// This class creates actual model for Word2Vec 
+        /// </summary>
+
     public partial class Word2VecModelCreate : Form
     {
 
@@ -71,9 +75,11 @@ namespace BiblickyGenerator
             string answer = checkTheForm();
             if (answer == "everything is OK")
             {
+                textBox_fileName.Text = "";
                 string file = mergeAllFiles();
                 Word2Vec.trainModel(file, VectorLength, MinCountWords, NumberOfIterations);
                 deleteFile(file);
+                textBox_Error.Text = "Model " + Path.GetFileNameWithoutExtension(file) + " úspěšně vytvořen";
             }
             else textBox_Error.Text = answer;
         }
@@ -90,13 +96,14 @@ namespace BiblickyGenerator
             {
                 return "Jméno modelu není validní";
             }
-            else if (FinalLengthOFModel <= 0) return "Nelze vyrobyt prázdný model";
+            else if (FinalLengthOFModel <= 0) return "Nelze vyrobit prázdný model";
         
             return "everything is OK";
         }
         
         private string mergeAllFiles()
         {
+
             string tmpFile = projectDirectory + "\\Temp\\" + textBox_fileName.Text + ".txt";
          
             foreach(var item in DictFilesInModel)
@@ -104,12 +111,19 @@ namespace BiblickyGenerator
                 string source = projectDirectory + "\\SourceTXTFiles\\" + item.Key.ToString() + ".txt";
                 for (int i = 0; i < item.Value[0]; i++)
                 {
+                    /*
                     using (StreamWriter writeStream = File.AppendText(tmpFile))
                     {
                         using (StreamReader sr = new StreamReader(File.OpenRead(source)))
                         {
                             writeStream.WriteLine(sr.ReadLine());
                         }
+                    }*/
+                    using (Stream input = File.OpenRead(source))
+                    using (Stream output = new FileStream(tmpFile, FileMode.Append,
+                                                          FileAccess.Write, FileShare.None))
+                    {
+                        input.CopyTo(output);
                     }
                 }
 

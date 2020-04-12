@@ -2,7 +2,7 @@
 using System.IO;
 using Word2Vec.Net;
 using Word2vec.Tools;
-
+using System.Collections.Generic;
 
 namespace BiblickyGenerator
 {
@@ -21,7 +21,7 @@ namespace BiblickyGenerator
 
         public static void trainModel(string trainfile, int sizeOfVectors = 100, int minCount = 5, int iterations = 5)
         {
-            string outputFileName =  Path.GetDirectoryName(trainfile) + "\\..\\" +
+            string outputFileName = Path.GetDirectoryName(trainfile) + "\\..\\" +
             "Models\\" + Path.GetFileName(trainfile);
 
 
@@ -43,7 +43,7 @@ namespace BiblickyGenerator
             word2Vec.TrainModel();
 
 
-            
+
         }
 
 
@@ -58,114 +58,32 @@ namespace BiblickyGenerator
         /// <param name="path">This file is located in Models file</param>
 
 
-        static void UseWord2Vec(string path)
+        public static Dictionary<string, string> UseWord2Vec(string path, string[] words)
         {
 
-        
+            Dictionary<string, string> replacedWords = new Dictionary<string, string>();
             var vocabulary = new Word2VecTextReader().Read(path);
 
-            Console.WriteLine("vectors file: " + path);
-            Console.WriteLine("vocabulary size: " + vocabulary.Words.Length);
-            Console.WriteLine("w2v vector dimensions count: " + vocabulary.VectorDimensionsCount);
-
-            Console.WriteLine();
-
-
-            while (true)
+            foreach (string word in words)
             {
-                int count = 7;
-                Console.Write("Enter the main word: ");
-
-                string word = Console.ReadLine();
-
-                /*   Console.Write("Enter the second word: ");
-                     string anotherWord = Console.ReadLine();
-
-                     Console.Write("Enter the third word: ");
-
-                     string thirdWord = Console.ReadLine();
-
-
-                  */
-
-                #region distance
-
-                int actualCount = 1;
-
-                Console.WriteLine("top " + actualCount + " closest to \"" + word + "\" words:");
+                int count = 10;
+             
                 var closest = vocabulary.Distance(word, count);
 
-                // Is simmilar to:
-                // var closest = vocabulary[boy].GetClosestFrom(vocabulary.Words.Where(w => w != vocabulary[boy]), count);
-
                 foreach (var neightboor in closest)
-                    // --                 if (actualCount < 15)
-                    // --               {
-                    if (neightboor.Representation.WordOrNull.ToLower() == neightboor.Representation.WordOrNull)
-                        Console.WriteLine(neightboor.Representation.WordOrNull + "\t\t" + neightboor.DistanceValue);
-                //               actualCount++;
-                //             }
-                //              else break;
-                #endregion
-
-                Console.WriteLine();
-                /*
-                #region analogy
-
-                actualCount = 1;
-                Console.WriteLine("\"" + anotherWord + "\" relates to \"" + word + "\" as \"" + thirdWord + "\" relates to ...");
-                var analogies = vocabulary.Analogy(anotherWord, word, thirdWord, count);
-                foreach (var neightboor in analogies)
-                    if ((actualCount < 35) && (neightboor.Representation.WordOrNull == neightboor.Representation.WordOrNull.ToLower()))
-                    {
-
-                        Console.WriteLine(neightboor.Representation.WordOrNull + "\t\t" + neightboor.DistanceValue);
-                        actualCount++;
-                    }
-                    else break;
-               #endregion
-
-                Console.WriteLine();
-               #region addition
-                            Console.WriteLine("\"" + word + "\" + \"" + anotherWord + "\" = ...");
-                            var additionRepresentation = vocabulary[word].Add(vocabulary[anotherWord]);
-                            var closestAdditions = vocabulary.Distance(additionRepresentation, count);
-                            foreach (var neightboor in closestAdditions)
-                                Console.WriteLine(neightboor.Representation.WordOrNull + "\t\t" + neightboor.DistanceValue);
-                            #endregion
-
-                            Console.WriteLine();
-
-                            #region subtraction
-                            Console.WriteLine("\"" + word + "\" - \"" + anotherWord + "\" = ...");
-                            var subtractionRepresentation = vocabulary[word].Substract(vocabulary[anotherWord]);
-                            var closestSubtractions = vocabulary.Distance(subtractionRepresentation, count);
-                            foreach (var neightboor in closestSubtractions)
-                                Console.WriteLine(neightboor.Representation.WordOrNull + "\t\t" + neightboor.DistanceValue);
-                #endregion
-                */
-           /*     Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-
-            */
-
-                /*
-
-
-                            var distance = new Distance(outputFileName);
-                            BestWord[] bestwords = distance.Search("Nulla");
-                            Console.WriteLine(bestwords.GetLength(0));
-
-                            Console.WriteLine("_________________________________________________");
-                  */
-
-                /* foreach (BestWord bs in bestwords)
                 {
-                    bs.ToString();
-                        }
-                        */
+                    if (neightboor.Representation.WordOrNull.ToLower() == neightboor.Representation.WordOrNull)
+                    {
+                        replacedWords.Add(word, neightboor.Representation.WordOrNull);
+                        break;
+                    }
+                }
+                if (!replacedWords.ContainsKey(word)) replacedWords.Add(word, word); 
+
 
             }
+            return replacedWords;
         }
     }
 }
+

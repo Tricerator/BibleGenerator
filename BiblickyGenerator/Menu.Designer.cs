@@ -72,6 +72,7 @@
             this.button_INLINE_W2V.TabIndex = 3;
             this.button_INLINE_W2V.Text = "In-line parafrázování";
             this.button_INLINE_W2V.UseVisualStyleBackColor = true;
+            this.button_INLINE_W2V.Click += new System.EventHandler(this.button_INLINE_W2V_Click);
             // 
             // button_W2V_Transform_File
             // 
@@ -81,6 +82,7 @@
             this.button_W2V_Transform_File.TabIndex = 4;
             this.button_W2V_Transform_File.Text = "Parafrázovat soubor";
             this.button_W2V_Transform_File.UseVisualStyleBackColor = true;
+            this.button_W2V_Transform_File.Click += new System.EventHandler(this.button_W2V_Transform_File_Click);
             // 
             // Menu
             // 
