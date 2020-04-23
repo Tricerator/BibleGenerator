@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BiblickyGenerator
 {
+    /// <summary>
+    /// Miniform just for accepting the number of repeating 
+    ///   of the selected file
+    /// </summary>
     public partial class ReadCount : Form
     {
         Word2VecModelCreate parent;
-        public ReadCount(Word2VecModelCreate form)
+
+        /// <summary>
+        /// This method reads number, otherwise it throws warning message
+        ///  it works even for the key Enter 
+        /// </summary>
+        /// <param name="parentForm"></param>
+        public ReadCount(Word2VecModelCreate parentForm)
         {
             InitializeComponent();
-            parent = form;
+            parent = parentForm;
 
             textBox1.KeyDown += (sender, args) => {
                 if (args.KeyCode == Keys.Enter)
@@ -34,7 +37,6 @@ namespace BiblickyGenerator
             {
                 parent.setNumberOfOneFile(output);
                 Close();
-                
             }
             else
             {

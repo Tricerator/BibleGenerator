@@ -49,6 +49,10 @@ namespace BiblickyGenerator
             LoadFiles();
         }
 
+
+        /// <summary>
+        /// This methods loads files into ListBox
+        /// </summary>
         private void LoadFiles()
         {
             
@@ -70,6 +74,12 @@ namespace BiblickyGenerator
 
         }
        
+       /// <summary>
+       ///  If all params are set correctly, this model starts 
+       ///    Word2Vec model create
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void button_buildModel_Click(object sender, EventArgs e)
         {
             string answer = checkTheForm();
@@ -100,7 +110,13 @@ namespace BiblickyGenerator
         
             return "everything is OK";
         }
+       
         
+        /// <summary>
+        /// This method merges all files multiplied by chosen constant to a single file
+        ///         which will be saved in TMP file. 
+        /// </summary>
+        /// <returns></returns>
         private string mergeAllFiles()
         {
 
@@ -111,14 +127,7 @@ namespace BiblickyGenerator
                 string source = projectDirectory + "\\SourceTXTFiles\\" + item.Key.ToString() + ".txt";
                 for (int i = 0; i < item.Value[0]; i++)
                 {
-                    /*
-                    using (StreamWriter writeStream = File.AppendText(tmpFile))
-                    {
-                        using (StreamReader sr = new StreamReader(File.OpenRead(source)))
-                        {
-                            writeStream.WriteLine(sr.ReadLine());
-                        }
-                    }*/
+                    
                     using (Stream input = File.OpenRead(source))
                     using (Stream output = new FileStream(tmpFile, FileMode.Append,
                                                           FileAccess.Write, FileShare.None))
@@ -138,7 +147,8 @@ namespace BiblickyGenerator
         {
             File.Delete(file);
         }
-
+        
+       
         private void resetAll()
         {
 
@@ -194,6 +204,10 @@ namespace BiblickyGenerator
             }
         }
 
+        /// <summary>
+        /// For every insertion of new file this method recount size and percentage
+        ///    of files
+        /// </summary>
         private void fillTheForm()
         {
             listBox_NumberOfRepetition.Items.Clear();
@@ -211,6 +225,11 @@ namespace BiblickyGenerator
             textBox_absoluteSize.Text = countFileSize( FinalLengthOFModel);
         }
 
+        /// <summary>
+        /// This method gives a user - readable output of file size
+        /// </summary>
+        /// <param name="len"></param>
+        /// <returns></returns>
         private string countFileSize(double len)
         {
             string[] sizes = { "B", "KB", "MB", "GB" };
@@ -229,7 +248,14 @@ namespace BiblickyGenerator
         {
            
         }
-
+      
+        
+        /// <summary>
+        /// This method gives a chance to roll back our choice of file with number
+        ///     of repetition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_choiceBack_Click(object sender, EventArgs e)
         {
             if(listBox_finalFiles.SelectedIndex >= 0) { 

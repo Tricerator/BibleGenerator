@@ -1,13 +1,20 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 
 
 namespace UnitTestBibleGenerator
 {
+    /// <summary>
+    /// Test of transforming file for dangerous characters
+    /// </summary>
     [TestClass]
     public class TestingTransformTXT : BiblickyGenerator.TransformTXTFile
     {
+
+        /// <summary>
+        /// For languages as Hebrew it does not work well 
+        /// </summary>
         [TestMethod]
         public void TestFromDangerToNormal()
         {
@@ -18,7 +25,13 @@ namespace UnitTestBibleGenerator
             Assert.AreEqual("...", answer);
             answer = TransformStringBack(" . ppkj . 56 # ");
             Assert.AreEqual(".ppkj.56#", answer);
+
+            answer = ".בְּרֵאשִׁית.";
+            Assert.AreEqual(" . בְּרֵאשִׁית . ", TransformString(answer));
+
+            answer = "В начале сотворил Бог небо и землю.";
+            Assert.AreEqual("В начале сотворил Бог небо и землю . ", TransformString(answer));
         }
-      
+
     }
 }

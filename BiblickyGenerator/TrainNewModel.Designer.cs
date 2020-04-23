@@ -33,12 +33,11 @@
             this.button_Word2Vec_Model_train = new System.Windows.Forms.Button();
             this.textbox_warning = new System.Windows.Forms.TextBox();
             this.textBox_result = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(370, 286);
+            this.button3.Location = new System.Drawing.Point(370, 279);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(194, 55);
             this.button3.TabIndex = 2;
@@ -48,7 +47,7 @@
             // 
             // button_change_TXT
             // 
-            this.button_change_TXT.Location = new System.Drawing.Point(370, 83);
+            this.button_change_TXT.Location = new System.Drawing.Point(370, 115);
             this.button_change_TXT.Name = "button_change_TXT";
             this.button_change_TXT.Size = new System.Drawing.Size(194, 65);
             this.button_change_TXT.TabIndex = 3;
@@ -58,7 +57,7 @@
             // 
             // button_Word2Vec_Model_train
             // 
-            this.button_Word2Vec_Model_train.Location = new System.Drawing.Point(370, 220);
+            this.button_Word2Vec_Model_train.Location = new System.Drawing.Point(370, 197);
             this.button_Word2Vec_Model_train.Name = "button_Word2Vec_Model_train";
             this.button_Word2Vec_Model_train.Size = new System.Drawing.Size(194, 60);
             this.button_Word2Vec_Model_train.TabIndex = 4;
@@ -94,21 +93,11 @@
             this.textBox_result.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox_result.Visible = false;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(370, 154);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(194, 60);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Uprav složku .txt souborů";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // TrainNewModel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(986, 450);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox_result);
             this.Controls.Add(this.textbox_warning);
             this.Controls.Add(this.button_Word2Vec_Model_train);
@@ -127,6 +116,5 @@
         private System.Windows.Forms.Button button_Word2Vec_Model_train;
         private System.Windows.Forms.TextBox textbox_warning;
         private System.Windows.Forms.TextBox textBox_result;
-        private System.Windows.Forms.Button button1;
     }
 }

@@ -212,6 +212,7 @@
             this.button_saveResults.TabIndex = 17;
             this.button_saveResults.Text = "Uložit výsledky";
             this.button_saveResults.UseVisualStyleBackColor = true;
+            this.button_saveResults.Click += new System.EventHandler(this.button_saveResults_Click);
             // 
             // button_reset
             // 

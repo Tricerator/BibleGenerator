@@ -18,6 +18,7 @@ namespace BiblickyGenerator
                                '-', '.', ',','/','\\','\'','"',';','}',']','{','[','|','?','>','<'
                                ,'+','=',':','“', '„' };
 
+        //suitable for czech and english chars
         private static char[] smallCzechChars = { 'a','á','b','c','č','d','ď','e','é',
                                                   'ě','f','g','h','i','í','j','k','l',
                                                   'm','n','ň','o','ó','p','q','r','ř',
@@ -40,7 +41,12 @@ namespace BiblickyGenerator
             if (bannedChars.Contains(oneChar)) return " " + oneChar + " ";
             else return "" + oneChar;
         }
-
+        /// <summary>
+        /// This method takes string and every symbol not included in Czech alphabet
+        ///    will be wrapped by spaces
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public static string TransformString(string line)
         {
             if (line.Length == 0) return "";
@@ -56,6 +62,12 @@ namespace BiblickyGenerator
             return sb.ToString();
 
         }
+
+        /// <summary>
+        /// Inverse function to the TransformString(string line)
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public static string TransformStringBack(string line)
         {
             if (line.Length == 0) return "";
@@ -75,7 +87,13 @@ namespace BiblickyGenerator
             }
             return sb.ToString();
         }
-
+        /// <summary>
+        /// The file will be transformed:
+        ///     all letters except names toLower
+        ///     all interpunction is wrapped by spaces   
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
         public static void TransformFile(string file)
         {
 
@@ -160,6 +178,12 @@ namespace BiblickyGenerator
 
 
         }
+
+        /// <summary>
+        /// This method tries to detect names and all non-names words 
+        ///    transform to lower cases
+        /// </summary>
+        /// <param name="file"></param>
         private static void FillDictionaryOfNames(string file)
         {
             using (StreamReader str = new StreamReader(file))

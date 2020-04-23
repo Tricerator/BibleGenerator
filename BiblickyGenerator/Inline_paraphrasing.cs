@@ -123,5 +123,10 @@ namespace BiblickyGenerator
             textBox_output1.Text = textBox_output2.Text = textBox_output3.Text = textBox_output4.Text = textBox_output5.Text = "";
 
         }
+
+        private void button_saveResults_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

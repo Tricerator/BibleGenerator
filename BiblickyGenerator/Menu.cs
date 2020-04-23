@@ -10,6 +10,16 @@ using System.Windows.Forms;
 
 namespace BiblickyGenerator
 {
+    /// <summary>
+    /// Initial form for the whole program
+    /// 
+    /// Important methods are 
+    ///         Button_exit_click - for exit
+    ///         TrainNewModelButton_Click - for training and transforming text
+    ///         Button_INLINE_W2V_Click - for inline paraphrasing from trained model
+    ///         Button_help_Click - for viewing help
+    ///         Button_W2V_Transform_File_Click - for paraphrasing file
+    /// </summary>
     public partial class Menu : Form
     {
         public Menu()
@@ -17,7 +27,7 @@ namespace BiblickyGenerator
             InitializeComponent();
         }
 
-        private void trainNewModelButton_Click(object sender, EventArgs e)
+        private void TrainNewModelButton_Click(object sender, EventArgs e)
         {
             TrainNewModel trainNew = new TrainNewModel();
             this.Hide();
@@ -28,12 +38,12 @@ namespace BiblickyGenerator
 
         
 
-        private void button_exit_Click(object sender, EventArgs e)
+        private void Button_exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void button_INLINE_W2V_Click(object sender, EventArgs e)
+        private void Button_INLINE_W2V_Click(object sender, EventArgs e)
         {
             Inline_paraphrasing inlineP = new Inline_paraphrasing();
             Hide();
@@ -41,7 +51,17 @@ namespace BiblickyGenerator
             Show();
         }
 
-        private void button_W2V_Transform_File_Click(object sender, EventArgs e)
+        private void Button_W2V_Transform_File_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button_help_Click(object sender, EventArgs e)
         {
 
         }

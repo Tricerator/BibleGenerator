@@ -43,7 +43,7 @@
             this.trainNewModelButton.TabIndex = 0;
             this.trainNewModelButton.Text = "Natrénovat nový model";
             this.trainNewModelButton.UseVisualStyleBackColor = true;
-            this.trainNewModelButton.Click += new System.EventHandler(this.trainNewModelButton_Click);
+            this.trainNewModelButton.Click += new System.EventHandler(this.TrainNewModelButton_Click);
             // 
             // button_exit
             // 
@@ -53,7 +53,7 @@
             this.button_exit.TabIndex = 1;
             this.button_exit.Text = "Ukončit program";
             this.button_exit.UseVisualStyleBackColor = true;
-            this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
+            this.button_exit.Click += new System.EventHandler(this.Button_exit_Click);
             // 
             // button_help
             // 
@@ -63,6 +63,7 @@
             this.button_help.TabIndex = 2;
             this.button_help.Text = "Nápověda";
             this.button_help.UseVisualStyleBackColor = true;
+            this.button_help.Click += new System.EventHandler(this.Button_help_Click);
             // 
             // button_INLINE_W2V
             // 
@@ -72,7 +73,7 @@
             this.button_INLINE_W2V.TabIndex = 3;
             this.button_INLINE_W2V.Text = "In-line parafrázování";
             this.button_INLINE_W2V.UseVisualStyleBackColor = true;
-            this.button_INLINE_W2V.Click += new System.EventHandler(this.button_INLINE_W2V_Click);
+            this.button_INLINE_W2V.Click += new System.EventHandler(this.Button_INLINE_W2V_Click);
             // 
             // button_W2V_Transform_File
             // 
@@ -82,7 +83,7 @@
             this.button_W2V_Transform_File.TabIndex = 4;
             this.button_W2V_Transform_File.Text = "Parafrázovat soubor";
             this.button_W2V_Transform_File.UseVisualStyleBackColor = true;
-            this.button_W2V_Transform_File.Click += new System.EventHandler(this.button_W2V_Transform_File_Click);
+            this.button_W2V_Transform_File.Click += new System.EventHandler(this.Button_W2V_Transform_File_Click);
             // 
             // Menu
             // 
@@ -96,6 +97,7 @@
             this.Controls.Add(this.trainNewModelButton);
             this.Name = "Menu";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Menu_Load);
             this.ResumeLayout(false);
 
         }
