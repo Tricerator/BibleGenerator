@@ -60,7 +60,7 @@
             // checkBox_useMorphoDiTa
             // 
             this.checkBox_useMorphoDiTa.AutoSize = true;
-            this.checkBox_useMorphoDiTa.Location = new System.Drawing.Point(1088, 229);
+            this.checkBox_useMorphoDiTa.Location = new System.Drawing.Point(1088, 261);
             this.checkBox_useMorphoDiTa.Name = "checkBox_useMorphoDiTa";
             this.checkBox_useMorphoDiTa.Size = new System.Drawing.Size(170, 24);
             this.checkBox_useMorphoDiTa.TabIndex = 2;
@@ -139,7 +139,7 @@
             this.listBox_models.ItemHeight = 20;
             this.listBox_models.Location = new System.Drawing.Point(1088, 59);
             this.listBox_models.Name = "listBox_models";
-            this.listBox_models.Size = new System.Drawing.Size(161, 164);
+            this.listBox_models.Size = new System.Drawing.Size(161, 184);
             this.listBox_models.Sorted = true;
             this.listBox_models.TabIndex = 10;
             // 
@@ -181,7 +181,7 @@
             this.label_output3.Name = "label_output3";
             this.label_output3.Size = new System.Drawing.Size(79, 25);
             this.label_output3.TabIndex = 14;
-            this.label_output3.Text = "Výtup 1";
+            this.label_output3.Text = "Výtup 3";
             this.label_output3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label_output4
@@ -192,7 +192,7 @@
             this.label_output4.Name = "label_output4";
             this.label_output4.Size = new System.Drawing.Size(79, 25);
             this.label_output4.TabIndex = 15;
-            this.label_output4.Text = "Výtup 1";
+            this.label_output4.Text = "Výtup 4";
             // 
             // label_output5
             // 
@@ -202,7 +202,7 @@
             this.label_output5.Name = "label_output5";
             this.label_output5.Size = new System.Drawing.Size(79, 25);
             this.label_output5.TabIndex = 16;
-            this.label_output5.Text = "Výtup 1";
+            this.label_output5.Text = "Výtup 5";
             // 
             // button_saveResults
             // 

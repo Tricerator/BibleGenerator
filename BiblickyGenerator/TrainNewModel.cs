@@ -76,6 +76,10 @@ namespace BiblickyGenerator
             Hide();
             while (true) {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.Filter = "Formát txt (*.txt)|*.txt|Všechny formáty (*.*)|*.*";
+                openFileDialog1.RestoreDirectory = true;
+
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {

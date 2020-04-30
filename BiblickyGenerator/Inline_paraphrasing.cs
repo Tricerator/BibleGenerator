@@ -1,17 +1,48 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 namespace BiblickyGenerator
 {
+
+    struct Window
+    {
+        private TextBox txtb;
+        public TextBox Txtb { get => txtb; set => txtb = value; }
+
+        private string input;
+        public string Input { get => input; set => input = value; }
+
+        private string output;
+        public string Output { get => output; set => output = value; }
+        
+
+        private string model;
+        public string Model { get => model; set => model = value; }
+
+        private bool usedMorphodita;
+        public bool UsedMorphodita { get => usedMorphodita; set => usedMorphodita = value; }
+
+        public void clear()
+        {
+            txtb.Text = "";
+            output = "";
+        }
+    }
     public partial class Inline_paraphrasing : Form
     {
-        private string ProjectDir = Environment.CurrentDirectory + "..\\..\\..\\Models";
+        private Window[] arrayOfWindows;
+        private Queue<Window> queueOfUsedWindows;
+
+       
+        private string ModelDir = Environment.CurrentDirectory + "..\\..\\..\\Models";
         public Inline_paraphrasing()
         {
             InitializeComponent();
-            foreach (var dir in Directory.GetFiles(ProjectDir))
+            foreach (var dir in Directory.GetFiles(ModelDir))
             {
 
                 listBox_models.Items.Add(Path.GetFileNameWithoutExtension(dir));
@@ -21,57 +52,40 @@ namespace BiblickyGenerator
 
         private void button_paraphrase_Click(object sender, EventArgs e)
         {
-            TextBox textBoxChoice;
-            Label labelChoice;
+            Window wndw = new Window();
 
-            if (textBox_output1.Text == "")
-            {
-                textBoxChoice = textBox_output1;
-                labelChoice = label_output1;
-            }
-            else if (textBox_output2.Text == "")
-            {
-                textBoxChoice = textBox_output2;
-                labelChoice = label_output2;
-            }
-            else if (textBox_output3.Text == "")
-            {
-                textBoxChoice = textBox_output3;
-                labelChoice = label_output3;
-            }
-            else if (textBox_output4.Text == "")
-            {
-                textBoxChoice = textBox_output4;
-                labelChoice = label_output4;
-            }
-            else if (textBox_output5.Text == "")
-            {
-                textBoxChoice = textBox_output5;
-                labelChoice = label_output5;
-            }
-            else
+            if (queueOfUsedWindows.Count >= 5)
             {
                 string message = "Buď uložte výsledky do souboru, nebo je resetujte";
                 string title = "Chyba";
                 MessageBox.Show(message, title);
                 return;
             }
-
-
-
-            if ((checkBox_useMorphoDiTa.Checked == false) && listBox_models.SelectedIndex >= 0)
+            else if (listBox_models.SelectedIndex >= 0)
             {
-                WordToVecWithoutMorphodita(textBoxChoice);
+                wndw = arrayOfWindows[queueOfUsedWindows.Count];
+                queueOfUsedWindows.Enqueue(wndw);
+                if (checkBox_useMorphoDiTa.Checked == true)  wndw.UsedMorphodita = true;
+                else wndw.UsedMorphodita = false;
+                try
+                {
+                    WordToVecWithoutMorphodita(wndw);
+                }catch (System.Net.WebException)
+                {
+                    wndw.Txtb.Text = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
+                        "nebo zvolte moznost bez MorphoDiTy";
+                }
             }
+
         }
 
-        private void WordToVecWithoutMorphodita(TextBox textBoxChoice)
+        private void WordToVecWithoutMorphodita(Window window)
         {
-            string file = ProjectDir + "\\" + listBox_models.SelectedItem.ToString() + ".txt";
-          
-            string textFromTextbox = textBox_input.Text;
+            window.Model = ModelDir + "\\" + listBox_models.SelectedItem.ToString() + ".txt";
+            
+            window.Input = textBox_input.Text;
 
-            string normalizeString = TransformTXTFile.TransformString(textFromTextbox);
+            string normalizeString = TransformTXTFile.TransformString(window.Input);
             string[] words = normalizeString.Split(' ');
             List<string> rightWords = new List<string>();
 
@@ -83,24 +97,36 @@ namespace BiblickyGenerator
                     rightWords.Add(word);
                 }
             }
-            Dictionary<string, string> replacedWords = Word2Vec.UseWord2Vec(file, rightWords.ToArray());
+            Dictionary<string, string> replacedWords = Word2Vec.UseWord2Vec(window.Model, rightWords.ToArray());
 
-            textBoxChoice.Clear();
-            foreach (string word in words)
+            window.clear();
+
+            if (window.UsedMorphodita)
             {
-                if (replacedWords.ContainsKey(word))
-                {
-                    textBoxChoice.Text += replacedWords[word] + " ";
-                }
-                else textBoxChoice.Text += word + " ";
+                MorphoDiTa.useMorphoDiTa(window.Input, replacedWords);
+
+
             }
+            else
+            {
+                foreach (string word in words)
+                {
+                    if (replacedWords.ContainsKey(word))
+                    {
+                        window.Output += replacedWords[word] + " ";
+                    }
+                    else window.Output += word + " ";
+                }
+
+            }
+            window.Txtb.Text = window.Output;
 
         }
 
 
         private void Inline_paraphrasing_Load(object sender, EventArgs e)
         {
-
+            reset();            
         }
 
         private void button_back_Click(object sender, EventArgs e)
@@ -120,12 +146,43 @@ namespace BiblickyGenerator
 
         private void reset()
         {
-            textBox_output1.Text = textBox_output2.Text = textBox_output3.Text = textBox_output4.Text = textBox_output5.Text = "";
+            textBox_input.Text = "";
+            checkBox_useMorphoDiTa.Checked = false;
+            listBox_models.ClearSelected();
+
+            Window w1 = new Window();
+            w1.Txtb = textBox_output1;
+            Window w2 = new Window();
+            w2.Txtb = textBox_output2;
+            Window w3 = new Window();
+            w3.Txtb = textBox_output3;
+            Window w4 = new Window();
+            w4.Txtb = textBox_output4;
+            Window w5 = new Window();
+            w5.Txtb = textBox_output5;
+            arrayOfWindows = new Window[] { w1, w2, w3, w4, w5 };
+            queueOfUsedWindows = new Queue<Window>();
 
         }
 
         private void button_saveResults_Click(object sender, EventArgs e)
         {
+            DateTime now = new DateTime();
+            string pathOfNewFile = ModelDir + "..\\Results\\" + now.ToString("o") + ".txt";
+            using (var sw = new StreamWriter(pathOfNewFile))
+            {
+                for (int i = 0; i < queueOfUsedWindows.Count; i++)
+                {
+                    Window w = queueOfUsedWindows.Dequeue();
+                    sw.WriteLine("Model: " + w.Model);
+                    sw.WriteLine("Input: " + w.Input);
+                    sw.WriteLine("Output: " + w.Output);
+                    if (w.UsedMorphodita) sw.WriteLine("MorphoDiTa: pouzita");
+                    else sw.WriteLine("MorphoDiTa: nepouzita");
+
+                }
+
+            }
 
         }
     }

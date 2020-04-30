@@ -78,9 +78,6 @@ namespace BiblickyGenerator
                         break;
                     }
                 }
-                if (!replacedWords.ContainsKey(word)) replacedWords.Add(word, word); 
-
-
             }
             return replacedWords;
         }
