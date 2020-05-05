@@ -24,13 +24,16 @@ namespace BiblickyGenerator
         public static string useMorphoDiTa(string sentence, Dictionary<string,string> wordsForReplacement)
         {
 
+      //      Dictionary<>
+            
+
             StringBuilder sb = new StringBuilder();
             string[] words = sentence.Split(' ');
             foreach(string word in words)
             {
                 if (wordsForReplacement.ContainsKey(word))
                 {
-                    string 
+                    
                 }
                 else
                 {
@@ -62,22 +65,30 @@ namespace BiblickyGenerator
                     client.Encoding = UTF8Encoding.UTF8;
                     return client.DownloadString(url);
                 }
-           
-            
+                        
         }
 
-        private static string getResultJsonVariableFromAnalyze(string answer)
+        protected static string getResultJsonVariableFromTagging(string answer)
         {
-            return answer.Split(new[] { "result\":" }, StringSplitOptions.None)[1].Split('"')[1];
+            if (answer == "") return "";
+            try
+            {
+                return answer.Split(new[] { "result\":" }, StringSplitOptions.None)[1].Split('"')[1];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return "";
+            }
 
         }
 
 
-        protected static Dictionary<string,string[]> getDictionaryForSentence(string sentence)
+        protected static Dictionary<string,string[]> analyzeSentenceAndReturnDictionary(string sentence)
         {
-            string url = "http://lindat.mff.cuni.cz/services/morphodita/api/analyze?data=";
-            string answer = getUrlAnswer(url + sentence.Replace(" ", "%20") + "&output=vertical");
-            answer = getResultJsonVariableFromAnalyze(answer);
+            if (sentence == "") return null;
+            string url = "http://lindat.mff.cuni.cz/services/morphodita/api/tag?data=" + sentence.Replace(" ","%20");
+            string answer = getUrlAnswer(url  + "&output=vertical");
+            answer = getResultJsonVariableFromTagging(answer);
             string[] linesOfOneWord = Regex.Split(answer, @"\\n");
 
 
@@ -85,10 +96,11 @@ namespace BiblickyGenerator
 
 
             foreach (var line in linesOfOneWord)
-            {
+            {   if (line == "") continue;
                 string[] words = Regex.Split(line, @"\\t");
 
                 string key = words[0];
+                if (dir.ContainsKey(key)) continue;
                 List<string> possibleConfigurations = new List<string>();
                 for (int i = 1; i < words.Length; i++)
                 {
@@ -109,12 +121,12 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="word">Needs to be in nomitative singular if it is a noun</param>
         /// <returns></returns>
-        private static Dictionary<string, string[]> generateFormsOfWord(string word)
+        protected static Dictionary<string, string[]> generateFormsOfWord(string word)
         {
             string url = "http://lindat.mff.cuni.cz/services/morphodita/api/generate?data=" + word;
 
                 string data = getUrlAnswer(url);
-                Dictionary<string, string[]> dict = getDictionaryResult(getResultJsonOutputInGenerate(data));
+                Dictionary<string, string[]> dict = getDictionaryFromGeneratedRequest(getResultJsonOutputInGenerate(data));
                 return dict;
         }
         /// <summary>
@@ -127,7 +139,7 @@ namespace BiblickyGenerator
         ///       string of word forms such as person, singular/plural etc...
         ///       example: NNMS1-----A----
         /// </returns>
-        private static Dictionary<string, string[]> getDictionaryResult(string dataResults)
+        private static Dictionary<string, string[]> getDictionaryFromGeneratedRequest(string dataResults)
         {
             Dictionary<string, string[]> dict = new Dictionary<string, string[]>();
             if (dataResults == "\\n") return null;

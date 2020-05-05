@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-
+using System.Net;
 namespace BiblickyGenerator
 {
 
@@ -70,10 +69,20 @@ namespace BiblickyGenerator
                 try
                 {
                     WordToVecWithoutMorphodita(wndw);
-                }catch (System.Net.WebException)
+                }
+                catch (Exception ex)
                 {
-                    wndw.Txtb.Text = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
-                        "nebo zvolte moznost bez MorphoDiTy";
+                    if (ex is WebException
+                        || ex is System.Net.Http.HttpRequestException
+                        || ex is System.Net.Sockets.SocketException)
+                    {
+
+
+                        wndw.Txtb.Text = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
+                            "nebo zvolte moznost bez MorphoDiTy"; ;
+                    }
+
+                    throw;
                 }
             }
 
