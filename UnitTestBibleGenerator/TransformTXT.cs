@@ -6,14 +6,14 @@ using System.IO;
 namespace UnitTestBibleGenerator
 {
     /// <summary>
-    /// Test of transforming file for dangerous characters
+    /// Test of transforming file for dangerous characters (interpunction etc...)
     /// </summary>
     [TestClass]
     public class TestingTransformTXT : BiblickyGenerator.TransformTXTFile
     {
 
         /// <summary>
-        /// For languages as Hebrew it does not work well 
+        /// It works even for languages as Hebrew 
         /// </summary>
         [TestMethod]
         public void TestFromDangerToNormal()

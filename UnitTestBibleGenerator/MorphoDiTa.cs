@@ -67,7 +67,7 @@ namespace UnitTestBibleGenerator
             url = "http://lindat.mff.cuni.cz/services/morphodita/api/tag?data=" + sentence.Replace(" ","%20") + "&output=vertical";
             data = getUrlAnswer(url);
             a = getResultJsonVariableFromTagging(data);
-            myResult = @"Děti\tdítě\tNNFP1-----A----\npojedou\tjet-1_^(pohybovat_se,_ne_však_chůzí)\tVB-P---3F-AA---\nk\tk-1\tRR--3----------\nbabičce\tbabička\tNNFS3-----A----\n.\t.\tZ:-------------";
+            myResult = @"Děti\tdítě\tNNFP1-----A----\npojedou\tjet-1_^(pohybovat_se,_ne_však_chůzí)\tVB-P---3F-AA---\nk\tk-1\tRR--3----------\nbabičce\tbabička\tNNFS3-----A----\n.\t.\tZ:-------------\n\n";
             Assert.AreEqual(myResult, a);
 
 
@@ -102,7 +102,13 @@ namespace UnitTestBibleGenerator
             string[] values5 = { ".", "Z:-------------" };
             ideal.Add(".", values5);
             
-            Assert.AreEqual(ideal, dict);
+            foreach(var key in ideal.Keys)
+            {
+                for(int i = 0; i < ideal[key].Length; i++)
+                {
+                    Assert.AreEqual(ideal[key][i], dict[key][i]);
+                }
+            }
         }
 
 
@@ -115,14 +121,15 @@ namespace UnitTestBibleGenerator
         [TestMethod]
         public void TestUseMorphoDiTa() 
         {
-            string sentence1 = "Moje děti jí párky";
-            string answer1 = "Moje děti jí klobásy";
+            string sentence1 = "Moje děti jí malinu";
+            string answer1 = "Moje děti jí párek";
             Dictionary<string, string> testDict1= new Dictionary<string, string>();
-            testDict1.Add("párky", "klobásy");
-            Assert.AreEqual(answer1,useMorphoDiTa(sentence1, testDict1));
+      //      testDict1.Add("párky", "klobásy");
+      //      string answer2 = useMorphoDiTa(sentence1, testDict1);
+       //     Assert.AreEqual(answer1,answer2);
 
-        //    testDict1.Add("párky", "klobásou");
-          //  Assert.AreEqual(answer1, useMorphoDiTa(sentence1, testDict1));
+            testDict1.Add("malinu", "párkem");
+            Assert.AreEqual(answer1, useMorphoDiTa(sentence1, testDict1));
 
 
 
