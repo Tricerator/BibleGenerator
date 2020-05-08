@@ -25,6 +25,7 @@ namespace BiblickyGenerator
         public Menu()
         {
             InitializeComponent();
+            CreateFiles.manageDirectories();
         }
 
         private void TrainNewModelButton_Click(object sender, EventArgs e)

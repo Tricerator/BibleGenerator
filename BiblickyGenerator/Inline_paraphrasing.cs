@@ -37,7 +37,7 @@ namespace BiblickyGenerator
         private Queue<Window> queueOfUsedWindows;
 
        
-        private string ModelDir = Environment.CurrentDirectory + "..\\..\\..\\Models";
+        private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
         public Inline_paraphrasing()
         {
             InitializeComponent();
@@ -64,11 +64,12 @@ namespace BiblickyGenerator
             {
                 wndw = arrayOfWindows[queueOfUsedWindows.Count];
                 queueOfUsedWindows.Enqueue(wndw);
-                if (checkBox_useMorphoDiTa.Checked == true)  wndw.UsedMorphodita = true;
-                else wndw.UsedMorphodita = false;
                 try
                 {
-                    WordToVecWithoutMorphodita(wndw);
+                    if (checkBox_useMorphoDiTa.Checked == true) wndw.UsedMorphodita = true;
+                    else                       wndw.UsedMorphodita = false;
+                    ParaphraseText(wndw);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -80,15 +81,13 @@ namespace BiblickyGenerator
 
                         wndw.Txtb.Text = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
                             "nebo zvolte moznost bez MorphoDiTy"; ;
-                    }
-
-                    throw;
+                    }else throw;
                 }
             }
 
         }
 
-        private void WordToVecWithoutMorphodita(Window window)
+        private void ParaphraseText(Window window)
         {
             window.Model = ModelDir + "\\" + listBox_models.SelectedItem.ToString() + ".txt";
             
@@ -112,9 +111,7 @@ namespace BiblickyGenerator
 
             if (window.UsedMorphodita)
             {
-                MorphoDiTa.useMorphoDiTa(window.Input, replacedWords);
-
-
+                window.Output = MorphoDiTa.useMorphoDiTa(window.Input, replacedWords);
             }
             else
             {
@@ -155,9 +152,23 @@ namespace BiblickyGenerator
 
         private void reset()
         {
+            if (queueOfUsedWindows != null)
+            {
+                foreach (var window in queueOfUsedWindows)
+                {
+                    var wndw = window;
+                    wndw.Output = "";
+                    wndw.Input = "";
+                    wndw.UsedMorphodita = false;
+                    wndw.Model = "";
+                    wndw.Txtb.Text = "";
+                }
+            }
+        
             textBox_input.Text = "";
             checkBox_useMorphoDiTa.Checked = false;
             listBox_models.ClearSelected();
+
 
             Window w1 = new Window();
             w1.Txtb = textBox_output1;
@@ -177,7 +188,8 @@ namespace BiblickyGenerator
         private void button_saveResults_Click(object sender, EventArgs e)
         {
             DateTime now = new DateTime();
-            string pathOfNewFile = ModelDir + "..\\Results\\" + now.ToString("o") + ".txt";
+            
+            string pathOfNewFile = ModelDir + "\\..\\Results\\" + now.ToString().Replace(" ","_").Replace("/","-") + ".txt";
             using (var sw = new StreamWriter(pathOfNewFile))
             {
                 for (int i = 0; i < queueOfUsedWindows.Count; i++)

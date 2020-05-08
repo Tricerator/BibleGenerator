@@ -23,7 +23,7 @@ namespace BiblickyGenerator
         /// <returns></returns>
         public static string useMorphoDiTa(string sentence, Dictionary<string, string> wordsForReplacement)
         {
-
+            if (wordsForReplacement.Count == 0) return sentence;
             Dictionary<string, string[]> dict = analyzeSentenceAndReturnDictionary(sentence);
 
             Dictionary<string, string> dictOfMorphCOmbinations = new Dictionary<string, string>();
@@ -230,11 +230,22 @@ namespace BiblickyGenerator
         /// <returns>returns just JSON variable result from generate request</returns>
         protected static string getResultJsonOutputInGenerate(string data)
         {
-            //this line prevents empty inputs to shut down the app
-            data += "\"\\n";
-            data = data.Split(']')[1].Split(':')[1].Split('"')[1];
-            data = Regex.Split(data, @"\\n")[0];
-            return data;
+            try
+            {
+                //this line prevents empty inputs to shut down the app
+                data += "\"\\n";
+                data = data.Split(']')[1];
+                //    ",\n \"result\": \"
+                data = Regex.Split(data, "\"result\": \\\"")[1];
+
+                data = Regex.Split(data, @"\\n")[0];
+                return data;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return "";
+            }
+           
         }
 
       //  protected string getDictionaryOfgeneratedWords
