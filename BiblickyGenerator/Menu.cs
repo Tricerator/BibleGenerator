@@ -70,6 +70,12 @@ namespace BiblickyGenerator
         private void Button_help_Click(object sender, EventArgs e)
         {
 
+            string help = "Nyní jste v hlavním okně celé aplikace. Buď můžete"
+                + "natrénovat nový model, nebo můžete využít modelů již natrénovaných. Ty si ztáhnete z těchto ....."
+                + "webových stránek. Pomocí těchto modelů můžete buď parafrázovat celý soubor, či si je vyzkoušet " +
+                "v in-line parafrázování, kde si navíc můžete výsledky uložit. ";
+                
+            MessageBox.Show(help);
         }
     }
 }

@@ -30,7 +30,20 @@ namespace UnitTestBibleGenerator
             Assert.AreEqual(" . בְּרֵאשִׁית . ", TransformString(answer));
 
             answer = "В начале сотворил Бог небо и землю.";
-            Assert.AreEqual("В начале сотворил Бог небо и землю . ", TransformString(answer));
+            Assert.AreEqual("В начале сотворил Бог небо и землю . ", TransformString(answer));        
+        }
+        [TestMethod]
+        public void TestFinalOutput()
+        {
+            string someString = "Ahoj, ahoj, ahoj.";
+            Assert.AreEqual(someString, TransformStringBack(TransformString(someString)));
+
+            someString = "Ahoj, ahoj.";
+            Assert.AreEqual(someString, TransformStringBack("Ahoj ,  ahoj . "));
+
+
+
+
         }
 
     }

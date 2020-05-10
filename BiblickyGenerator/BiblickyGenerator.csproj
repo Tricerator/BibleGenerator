@@ -81,6 +81,7 @@
       <DependentUpon>TrainNewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="TransformTXTFile.cs" />
+    <Compile Include="Window.cs" />
     <Compile Include="Word2Vec.cs" />
     <Compile Include="Word2VecModelCreate.cs">
       <SubType>Form</SubType>

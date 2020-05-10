@@ -10,6 +10,26 @@ namespace BiblickyGenerator
 {
     public class MorphoDiTa
     {
+                /// <summary>
+                /// 
+                /// </summary>
+
+        private static SortedSet<int> indexesNoun = new SortedSet<int>{ 1, 2, 4, 5, 10,11,12 };
+        private static SortedSet<int> indexesAdjective = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+        private static SortedSet<int> indexesPronoun = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+        private static SortedSet<int> indexesNumeral = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+
+        private static SortedSet<int> indexesVerb = new SortedSet<int> { 1, 2, 3, 4, 8,9,10,11,12 };
+
+        private static SortedSet<int> indexesAdverb = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static SortedSet<int> indexesPreposition = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static SortedSet<int> indexesConjunction = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+
+        private static SortedSet<int> indexesRest = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+
+
+
+
 
 
         /// <summary>
@@ -92,12 +112,60 @@ namespace BiblickyGenerator
 
                 foreach (string key in line.Keys)
                 {
-                    for (int i = 0; i < key.Length; i++)
+
+                    char s = key[0];
+                    switch (s)
                     {
-                        if (((i>= 0 && i < 2) || (i == 4)) && key[i] != morphCombination[i]) break;
+                        case 'N':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesNoun.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+
+                        case 'A':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesAdjective.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+
+                        case 'C':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesNumeral.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+
+                        case 'D':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesAdverb.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+
+                        case 'P':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesPronoun.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+                        case 'R':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesPreposition.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+                        default:
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesRest.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                            }
+                            return line[key][0];
+
                     }
-                return line[key][0];
-            }
+                }
+                               
             return null;
             }
         }
@@ -227,7 +295,7 @@ namespace BiblickyGenerator
                         for (int i = 0; i < words.Length; i += 3)
                         {
                             string[] values = { words[i], words[i + 1] };
-                            dict.Add(words[i + 2], values);
+                            if(!dict.ContainsKey(words[i+2])) dict.Add(words[i + 2], values);
                         }
                         DictionaryOfDictionaries.Add(keys[k], dict);
                     }

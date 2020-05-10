@@ -8,35 +8,19 @@ using System.Text.RegularExpressions;
 
 namespace BiblickyGenerator
 {
-
-    struct Window
-    {
-        private TextBox txtb;
-        public TextBox Txtb { get => txtb; set => txtb = value; }
-
-        private string input;
-        public string Input { get => input; set => input = value; }
-
-        private string output;
-        public string Output { get => output; set => output = value; }
-        
-
-        private string model;
-        public string Model { get => model; set => model = value; }
-
-        private bool usedMorphodita;
-        public bool UsedMorphodita { get => usedMorphodita; set => usedMorphodita = value; }
-
-        public void clear()
-        {
-            txtb.Text = "";
-            output = "";
-        }
-    }
+    
     public partial class Inline_paraphrasing : Form
     {
-        private Window[] arrayOfWindows;
-        private Queue<Window> queueOfUsedWindows;
+        private static Window w1 = new Window();
+        private static Window w2 = new Window();
+        private static Window w3 = new Window();
+        private static Window w4 = new Window();
+        private static Window w5 = new Window();
+
+        private static Window[] arrayOfWindows = {w1,w2,w3,w4,w5 };
+        
+        //  private static Queue<Window> queueOfUsedWindows;
+        private static byte queueOfUsedWindows;
 
 
         //  private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
@@ -46,17 +30,17 @@ namespace BiblickyGenerator
             InitializeComponent();
             foreach (var dir in Directory.GetFiles(ModelDir))
             {
-
                 listBox_models.Items.Add(Path.GetFileNameWithoutExtension(dir));
             }
+            
+            queueOfUsedWindows = 0;
 
         }
 
         private void button_paraphrase_Click(object sender, EventArgs e)
         {
-            Window wndw = new Window();
-
-            if (queueOfUsedWindows.Count >= 5)
+            
+            if (queueOfUsedWindows >= 5)
             {
                 string message = "Buď uložte výsledky do souboru, nebo je resetujte";
                 string title = "Chyba";
@@ -65,17 +49,17 @@ namespace BiblickyGenerator
             }
             else if (listBox_models.SelectedIndex >= 0)
             {
-                wndw = arrayOfWindows[queueOfUsedWindows.Count];
+                Window wndw = arrayOfWindows[queueOfUsedWindows];
                 
-                try
+   //             try
                 {
                     if (checkBox_useMorphoDiTa.Checked == true) wndw.UsedMorphodita = true;
                     else                       wndw.UsedMorphodita = false;
-                    ParaphraseText(wndw);
+                    ParaphraseText();
               
                 }
-                catch (Exception ex)
-                {
+  /*              catch (Exception ex)
+    //            {
                     if (ex is WebException
                         || ex is System.Net.Http.HttpRequestException
                         || ex is System.Net.Sockets.SocketException)
@@ -86,12 +70,14 @@ namespace BiblickyGenerator
                             "nebo zvolte moznost bez MorphoDiTy"; ;
                     }else throw;
                 }
+                */
             }
 
         }
 
-        private void ParaphraseText(Window window)
+        private void ParaphraseText()
         {
+            Window window = arrayOfWindows[queueOfUsedWindows];
             window.Model = ModelDir + "\\" + listBox_models.SelectedItem.ToString() + ".txt";
             
             window.Input = textBox_input.Text;
@@ -110,7 +96,7 @@ namespace BiblickyGenerator
             }
             Dictionary<string, string> replacedWords = Word2Vec.UseWord2Vec(window.Model, rightWords.ToArray());
 
-            window.clear();
+         //   window.clear();
 
             if (window.UsedMorphodita)
             {
@@ -128,17 +114,29 @@ namespace BiblickyGenerator
                 }
 
             }
-            window.Txtb.Text = TransformTXTFile.TransformStringBack(window.Output);
-            queueOfUsedWindows.Enqueue(window);
+            if (window.UsedMorphodita) window.Txtb.Text = window.Output;
+            else
+            {
+                window.Txtb.Text = TransformTXTFile.TransformStringBack(window.Output);
+                window.Output = window.Txtb.Text;
+            }
+           
+            queueOfUsedWindows++;
         }
 
 
         private void Inline_paraphrasing_Load(object sender, EventArgs e)
         {
-            reset();            
+            w1.Txtb = textBox_output1;
+            w2.Txtb = textBox_output2;
+            w3.Txtb = textBox_output3;
+            w4.Txtb = textBox_output4;
+            w5.Txtb = textBox_output5;
+
+            //  reset();            
         }
 
-        private void button_back_Click(object sender, EventArgs e)
+    private void button_back_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -155,37 +153,24 @@ namespace BiblickyGenerator
 
         private void reset()
         {
-            if (queueOfUsedWindows != null)
+            queueOfUsedWindows = 0;
+            foreach (var window in arrayOfWindows)
             {
-                foreach (var window in queueOfUsedWindows)
-                {
                     var wndw = window;
                     wndw.Output = "";
                     wndw.Input = "";
                     wndw.UsedMorphodita = false;
                     wndw.Model = "";
                     wndw.Txtb.Text = "";
-                }
             }
-        
+            
             textBox_input.Text = "";
             checkBox_useMorphoDiTa.Checked = false;
             listBox_models.ClearSelected();
 
-
-            Window w1 = new Window();
-            w1.Txtb = textBox_output1;
-            Window w2 = new Window();
-            w2.Txtb = textBox_output2;
-            Window w3 = new Window();
-            w3.Txtb = textBox_output3;
-            Window w4 = new Window();
-            w4.Txtb = textBox_output4;
-            Window w5 = new Window();
-            w5.Txtb = textBox_output5;
-            arrayOfWindows = new Window[] { w1, w2, w3, w4, w5 };
-            queueOfUsedWindows = new Queue<Window>();
-
+            /*
+            
+            */
         }
 
         private void button_saveResults_Click(object sender, EventArgs e)
@@ -195,15 +180,23 @@ namespace BiblickyGenerator
             var myUniqueFileName = FileManager.getSpecifiedDirectory("Results") + "\\" + $@"{DateTime.Now.Ticks}.txt";
             using (var sw = new StreamWriter(myUniqueFileName))
             {
-                for (int i = 0; i < queueOfUsedWindows.Count; i++)
+                for (int i = 0; i < queueOfUsedWindows; i++)
                 {
-                    Window w = queueOfUsedWindows.Dequeue();
+                    Window w = arrayOfWindows[i];
+                    if (w.Txtb.Text == "") break;
                     string[] partsOfPath = Regex.Split(w.Model, @"\\");
                     sw.WriteLine("Model: " + partsOfPath[partsOfPath.Length - 1]);
                     sw.WriteLine("Input: " + w.Input);
-                    sw.WriteLine("Output: " + TransformTXTFile.TransformStringBack(w.Output));
-                    if (w.UsedMorphodita) sw.WriteLine("MorphoDiTa: pouzita");
-                    else sw.WriteLine("MorphoDiTa: nepouzita");
+                    if (w.UsedMorphodita)
+                    {
+                        sw.WriteLine("Output: " + w.Output);
+                        sw.WriteLine("MorphoDiTa: pouzita");
+                    }
+                    else
+                    {
+                        sw.WriteLine("Output: " + w.Output);
+                        sw.WriteLine("MorphoDiTa: nepouzita");
+                    }
                     sw.WriteLine();
                    
 
