@@ -27,7 +27,7 @@ namespace BiblickyGenerator
         public Word2VecModelCreate()
         {
             InitializeComponent();
-            resetAll();
+            ResetAll();
             DictFilesInModel = new SortedDictionary<string, long[]>();
             FinalLengthOFModel = 0;
             MinCountWords = 0;
@@ -36,7 +36,7 @@ namespace BiblickyGenerator
             DirectoryName = "";
         }
 
-        public void setNumberOfOneFile(long num)
+        public void SetNumberOfOneFile(long num)
         {
             this.NumberOfOneFile = num;
         }
@@ -53,7 +53,7 @@ namespace BiblickyGenerator
         private void LoadFiles()
         {
             
-            string path = FileManager.getSpecifiedDirectory("SourceTXTFiles");
+            string path = FileManager.GetSpecifiedDirectory("SourceTXTFiles");
             string[] files = Directory.GetFiles(path);
             if (files.Length == 0)
             {
@@ -77,22 +77,22 @@ namespace BiblickyGenerator
        /// </summary>
        /// <param name="sender"></param>
        /// <param name="e"></param>
-        private void button_buildModel_Click(object sender, EventArgs e)
+        private void Button_buildModel_Click(object sender, EventArgs e)
         {
-            string answer = checkTheForm();
+            string answer = CheckTheForm();
             if (answer == "everything is OK")
             {
                 textBox_fileName.Text = "";
-                string file = mergeAllFiles();
-                Word2Vec.trainModel(file, VectorLength, MinCountWords, NumberOfIterations);
-                deleteFile(file);
+                string file = MergeAllFiles();
+                Word2Vec.TrainModel(file, VectorLength, MinCountWords, NumberOfIterations);
+                DeleteFile(file);
                 textBox_Error.Text = "Model " + Path.GetFileNameWithoutExtension(file) + " úspěšně vytvořen";
             }
             else textBox_Error.Text = answer;
         }
 
 
-        private string checkTheForm()
+        private string CheckTheForm()
         {
             
             if (!int.TryParse(textBox_vectorSize.Text, out VectorLength)) return "Délka vektoru musí být celé číslo";
@@ -114,14 +114,14 @@ namespace BiblickyGenerator
         ///         which will be saved in TMP file. 
         /// </summary>
         /// <returns></returns>
-        private string mergeAllFiles()
+        private string MergeAllFiles()
         {
 
-            string tmpFile = FileManager.getSpecifiedDirectory("Temp") +"\\" + textBox_fileName.Text + ".txt";
+            string tmpFile = FileManager.GetSpecifiedDirectory("Temp") +"\\" + textBox_fileName.Text + ".txt";
 
             foreach (var item in DictFilesInModel)
             {
-                string source = FileManager.getSpecifiedDirectory("SourceTXTFiles") + "\\" + item.Key.ToString() + ".txt";
+                string source = FileManager.GetSpecifiedDirectory("SourceTXTFiles") + "\\" + item.Key.ToString() + ".txt";
                 for (int i = 0; i < item.Value[0]; i++)
                 {
                     
@@ -140,13 +140,13 @@ namespace BiblickyGenerator
 
 
 
-        private void deleteFile(string file)
+        private void DeleteFile(string file)
         {
             File.Delete(file);
         }
         
        
-        private void resetAll()
+        private void ResetAll()
         {
 
             textBox_vectorSize.Text = "100";
@@ -158,21 +158,19 @@ namespace BiblickyGenerator
             listBox_modelFiles.Items.Clear();
         }
 
-        private void button_BackToMenu_Click(object sender, EventArgs e)
+        private void Button_BackToMenu_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-        }
+       
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
+        private void TextBox5_TextChanged(object sender, EventArgs e)
         {
 
         }
          
-        private void button_putFileRight_Click(object sender, EventArgs e)
+        private void Button_putFileRight_Click(object sender, EventArgs e)
         {
             if(listBox_modelFiles.SelectedIndex >= 0) { 
             string selectedFile = listBox_modelFiles.SelectedItem.ToString();
@@ -194,7 +192,7 @@ namespace BiblickyGenerator
                 DictFilesInModel.Add(listBox_modelFiles.SelectedItem.ToString(),arrayOfParams);
                 FinalLengthOFModel += new FileInfo(file).Length * NumberOfOneFile;
 
-                fillTheForm();
+                FillTheForm();
 
 
                 }
@@ -205,7 +203,7 @@ namespace BiblickyGenerator
         /// For every insertion of new file this method recount size and percentage
         ///    of files
         /// </summary>
-        private void fillTheForm()
+        private void FillTheForm()
         {
             listBox_NumberOfRepetition.Items.Clear();
             listBox_finalFiles.Items.Clear();
@@ -216,10 +214,10 @@ namespace BiblickyGenerator
             {
                 listBox_finalFiles.Items.Add(item.Key);
                 listBox_NumberOfRepetition.Items.Add(item.Value[0]);
-                listBox_sizeFile.Items.Add(countFileSize(item.Value[1] * item.Value[0]));
+                listBox_sizeFile.Items.Add(CountFileSize(item.Value[1] * item.Value[0]));
                 listBox_percentage.Items.Add(Math.Round(100 * (double)(item.Value[1] * item.Value[0]) / FinalLengthOFModel, 2));
             }
-            textBox_absoluteSize.Text = countFileSize( FinalLengthOFModel);
+            textBox_absoluteSize.Text = CountFileSize( FinalLengthOFModel);
         }
 
         /// <summary>
@@ -227,7 +225,7 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="len"></param>
         /// <returns></returns>
-        private string countFileSize(double len)
+        private string CountFileSize(double len)
         {
             string[] sizes = { "B", "KB", "MB", "GB" };
             
@@ -241,7 +239,7 @@ namespace BiblickyGenerator
             return String.Format("{0:0.##} " + sizes[order], len);
         }
 
-        private void listBox_modelFiles_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBox_modelFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
            
         }
@@ -253,7 +251,7 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button_choiceBack_Click(object sender, EventArgs e)
+        private void Button_choiceBack_Click(object sender, EventArgs e)
         {
             if(listBox_finalFiles.SelectedIndex >= 0) { 
             string item = listBox_finalFiles.SelectedItem.ToString();
@@ -262,21 +260,14 @@ namespace BiblickyGenerator
             FinalLengthOFModel -= (size * num);
             DictFilesInModel.Remove(item);
 
-            fillTheForm();
+            FillTheForm();
 
             }
 
         }
 
-        private void listBox_percentage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox10_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+      
+      
     }
 }
 

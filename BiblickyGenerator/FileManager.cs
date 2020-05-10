@@ -23,34 +23,38 @@ namespace BiblickyGenerator
         /// This method creates file 
         /// </summary>
         /// <returns></returns>
-        public static bool manageDirectories()
+        public static bool ManageDirectories()
         {
 
-            if (createFiles()) return true;
+            if (CreateFiles()) return true;
             else return false;
         } 
         
 
-        public static string getMainDirectory()
+        public static string GetMainDirectory()
         {
-            var root = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
-                
+            //if running in debug mode
+           // var root = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
+
+
+            //after creating exe file
+            var root = Directory.GetCurrentDirectory();
             return root;
         }
 
-        public static string getSpecifiedDirectory(string dir)
+        public static string GetSpecifiedDirectory(string dir)
         {
-            if (directories.Contains(dir)) return getMainDirectory() + "\\" + dir;
+            if (directories.Contains(dir)) return GetMainDirectory() + "\\" + dir;
             else return "ERROR";
         }
 
-        private static bool createFiles()
+        private static bool CreateFiles()
         {
             string[] directories = { "Models", "PlainTexts", "Results", "SourceTXTFiles", "Temp" };
             foreach (var dir in directories)
             {
 
-                string directoryPath = getMainDirectory() + "\\" + dir;
+                string directoryPath = GetMainDirectory() + "\\" + dir;
                 if (!Directory.Exists(directoryPath))
                 {
 
@@ -58,7 +62,7 @@ namespace BiblickyGenerator
                     if(dir == "PlainTexts")
                     {
 
-                        using (StreamWriter sw = new StreamWriter(File.Create(getMainDirectory() + "\\" + dir + "\\testFile.txt")))
+                        using (StreamWriter sw = new StreamWriter(File.Create(GetMainDirectory() + "\\" + dir + "\\testFile.txt")))
                         {
                             sw.WriteLine("Červený kůň byl včera večer doma, ale já o tom nevím.");
                             sw.WriteLine("Modrý kůň tam nebyl. Zelený kůň byl tam, kde byl modrý kůň.");

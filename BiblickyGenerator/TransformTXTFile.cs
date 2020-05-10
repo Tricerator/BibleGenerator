@@ -104,13 +104,13 @@ namespace BiblickyGenerator
             FillDictionaryOfNames(file);
 
 
-            string result = FileManager.getSpecifiedDirectory("SourceTXTFiles") +"\\"+ basenameOfFileWithoutExtensions + ".txt";
+            string result = FileManager.GetSpecifiedDirectory("SourceTXTFiles") +"\\"+ basenameOfFileWithoutExtensions + ".txt";
             if (File.Exists(result))
             {
                 int i = 1;
                 while (File.Exists(result))
                 {
-                    result = FileManager.getSpecifiedDirectory("SourceTXTFiles") + "\\" + basenameOfFileWithoutExtensions + "_" + i + "_.txt";
+                    result = FileManager.GetSpecifiedDirectory("SourceTXTFiles") + "\\" + basenameOfFileWithoutExtensions + "_" + i + "_.txt";
                     i++;
                 }
 

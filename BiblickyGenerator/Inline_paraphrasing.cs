@@ -24,7 +24,7 @@ namespace BiblickyGenerator
 
 
         //  private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
-        private string ModelDir = FileManager.getSpecifiedDirectory("Models");
+        private string ModelDir = FileManager.GetSpecifiedDirectory("Models");
         public Inline_paraphrasing()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace BiblickyGenerator
 
         }
 
-        private void button_paraphrase_Click(object sender, EventArgs e)
+        private void Button_paraphrase_Click(object sender, EventArgs e)
         {
             
             if (queueOfUsedWindows >= 5)
@@ -100,7 +100,7 @@ namespace BiblickyGenerator
 
             if (window.UsedMorphodita)
             {
-                window.Output = MorphoDiTa.useMorphoDiTa(window.Input, replacedWords);
+                window.Output = MorphoDiTa.UseMorphoDiTa(window.Input, replacedWords);
             }
             else
             {
@@ -136,22 +136,18 @@ namespace BiblickyGenerator
             //  reset();            
         }
 
-    private void button_back_Click(object sender, EventArgs e)
+    private void Button_back_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void label3_Click(object sender, EventArgs e)
+     
+        private void Button_reset_Click(object sender, EventArgs e)
         {
-
+            Reset();
         }
 
-        private void button_reset_Click(object sender, EventArgs e)
-        {
-            reset();
-        }
-
-        private void reset()
+        private void Reset()
         {
             queueOfUsedWindows = 0;
             foreach (var window in arrayOfWindows)
@@ -173,11 +169,11 @@ namespace BiblickyGenerator
             */
         }
 
-        private void button_saveResults_Click(object sender, EventArgs e)
+        private void Button_saveResults_Click(object sender, EventArgs e)
         {
 
 
-            var myUniqueFileName = FileManager.getSpecifiedDirectory("Results") + "\\" + $@"{DateTime.Now.Ticks}.txt";
+            var myUniqueFileName = FileManager.GetSpecifiedDirectory("Results") + "\\" + $@"{DateTime.Now.Ticks}.txt";
             using (var sw = new StreamWriter(myUniqueFileName))
             {
                 for (int i = 0; i < queueOfUsedWindows; i++)
@@ -203,7 +199,7 @@ namespace BiblickyGenerator
                 }
 
             }
-            reset();
+            Reset();
 
         }
     }

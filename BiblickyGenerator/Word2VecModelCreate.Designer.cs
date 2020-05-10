@@ -69,7 +69,7 @@
             this.listBox_modelFiles.Size = new System.Drawing.Size(201, 344);
             this.listBox_modelFiles.Sorted = true;
             this.listBox_modelFiles.TabIndex = 0;
-            this.listBox_modelFiles.SelectedIndexChanged += new System.EventHandler(this.listBox_modelFiles_SelectedIndexChanged);
+            this.listBox_modelFiles.SelectedIndexChanged += new System.EventHandler(this.ListBox_modelFiles_SelectedIndexChanged);
             // 
             // listBox_finalFiles
             // 
@@ -89,7 +89,7 @@
             this.button_BackToMenu.TabIndex = 2;
             this.button_BackToMenu.Text = "Zpět do menu";
             this.button_BackToMenu.UseVisualStyleBackColor = true;
-            this.button_BackToMenu.Click += new System.EventHandler(this.button_BackToMenu_Click);
+            this.button_BackToMenu.Click += new System.EventHandler(this.Button_BackToMenu_Click);
             // 
             // button_choiceBack
             // 
@@ -99,7 +99,7 @@
             this.button_choiceBack.TabIndex = 3;
             this.button_choiceBack.Text = "Zpět";
             this.button_choiceBack.UseVisualStyleBackColor = true;
-            this.button_choiceBack.Click += new System.EventHandler(this.button_choiceBack_Click);
+            this.button_choiceBack.Click += new System.EventHandler(this.Button_choiceBack_Click);
             // 
             // button_buildModel
             // 
@@ -109,7 +109,7 @@
             this.button_buildModel.TabIndex = 4;
             this.button_buildModel.Text = "Vytvořit model";
             this.button_buildModel.UseVisualStyleBackColor = true;
-            this.button_buildModel.Click += new System.EventHandler(this.button_buildModel_Click);
+            this.button_buildModel.Click += new System.EventHandler(this.Button_buildModel_Click);
             // 
             // textBox_vectorSize
             // 
@@ -154,7 +154,7 @@
             this.textBox5.Size = new System.Drawing.Size(201, 19);
             this.textBox5.TabIndex = 9;
             this.textBox5.Text = "minimální počet výskytu slov";
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.textBox5.TextChanged += new System.EventHandler(this.TextBox5_TextChanged);
             // 
             // textBox_6
             // 
@@ -174,7 +174,7 @@
             this.button_putFileRight.TabIndex = 12;
             this.button_putFileRight.Text = "Přidej";
             this.button_putFileRight.UseVisualStyleBackColor = true;
-            this.button_putFileRight.Click += new System.EventHandler(this.button_putFileRight_Click);
+            this.button_putFileRight.Click += new System.EventHandler(this.Button_putFileRight_Click);
             // 
             // textBox1
             // 
@@ -217,7 +217,6 @@
             this.textBox_fileName.Name = "textBox_fileName";
             this.textBox_fileName.Size = new System.Drawing.Size(126, 26);
             this.textBox_fileName.TabIndex = 16;
-            this.textBox_fileName.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox6
             // 
@@ -302,7 +301,6 @@
             this.listBox_percentage.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.listBox_percentage.Size = new System.Drawing.Size(72, 344);
             this.listBox_percentage.TabIndex = 25;
-            this.listBox_percentage.SelectedIndexChanged += new System.EventHandler(this.listBox_percentage_SelectedIndexChanged);
             // 
             // listBox_NumberOfRepetition
             // 
@@ -335,7 +333,6 @@
             this.textBox_absoluteSize.ReadOnly = true;
             this.textBox_absoluteSize.Size = new System.Drawing.Size(126, 26);
             this.textBox_absoluteSize.TabIndex = 28;
-            this.textBox_absoluteSize.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
             // 
             // textBox13
             // 

@@ -14,18 +14,18 @@ namespace BiblickyGenerator
                 /// 
                 /// </summary>
 
-        private static SortedSet<int> indexesNoun = new SortedSet<int>{ 1, 2, 4, 5, 10,11,12 };
-        private static SortedSet<int> indexesAdjective = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
-        private static SortedSet<int> indexesPronoun = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
-        private static SortedSet<int> indexesNumeral = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesNoun = new SortedSet<int>{ 1, 2, 4, 5, 10,11,12 };
+        private static readonly SortedSet<int> indexesAdjective = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesPronoun = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesNumeral = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
 
-        private static SortedSet<int> indexesVerb = new SortedSet<int> { 1, 2, 3, 4, 8,9,10,11,12 };
+        private static readonly SortedSet<int> indexesVerb = new SortedSet<int> { 1, 2, 3, 4, 8,9,10,11,12 };
 
-        private static SortedSet<int> indexesAdverb = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
-        private static SortedSet<int> indexesPreposition = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
-        private static SortedSet<int> indexesConjunction = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesAdverb = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesPreposition = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesConjunction = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
 
-        private static SortedSet<int> indexesRest = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesRest = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
 
 
 
@@ -41,10 +41,10 @@ namespace BiblickyGenerator
         ///         thhat was chosen for exchange by Word2Vec    
         /// </param>
         /// <returns></returns>
-        public static string useMorphoDiTa(string sentence, Dictionary<string, string> wordsForReplacement)
+        public static string UseMorphoDiTa(string sentence, Dictionary<string, string> wordsForReplacement)
         {
             if (wordsForReplacement.Count == 0) return sentence;
-            Dictionary<string, string[]> dict = analyzeSentenceAndReturnDictionary(sentence);
+            Dictionary<string, string[]> dict = AnalyzeSentenceAndReturnDictionary(sentence);
 
             Dictionary<string, string> dictOfMorphCOmbinations = new Dictionary<string, string>();
             foreach(var selectedWord in dict.Keys)
@@ -61,7 +61,7 @@ namespace BiblickyGenerator
                 basicFormOfWOrdsRequest.Append(word.Value + "%20");
             }
 
-            var basicForms = analyzeSentenceAndReturnDictionary(basicFormOfWOrdsRequest.ToString());
+            var basicForms = AnalyzeSentenceAndReturnDictionary(basicFormOfWOrdsRequest.ToString());
             string[] keys = basicForms.Keys.ToArray(); 
             StringBuilder sb = new StringBuilder();
             foreach (string line in basicForms.Keys)
@@ -69,7 +69,7 @@ namespace BiblickyGenerator
                 sb.Append(basicForms[line][0] + "%0A");
             }
 
-            var DictionaryOfDictionariesOfGeneratedWords = generateFormsOfWord(sb.ToString(),keys);
+            var DictionaryOfDictionariesOfGeneratedWords = GenerateFormsOfWord(sb.ToString(),keys);
 
 
 
@@ -81,7 +81,7 @@ namespace BiblickyGenerator
                 {
                     string resultWord = wordsForReplacement[word];
                     string resultWordMorphology = dictOfMorphCOmbinations[word];
-                    string result = getMorphoDiTaWord(resultWord,DictionaryOfDictionariesOfGeneratedWords,resultWordMorphology);
+                    string result = GetMorphoDiTaWord(resultWord,DictionaryOfDictionariesOfGeneratedWords,resultWordMorphology);
                     resultSentence.Append(result + " ");
                 }
                 else
@@ -103,7 +103,7 @@ namespace BiblickyGenerator
         /// <param name="dict"></param>
         /// <param name="morphCombination"></param>
         /// <returns></returns>
-        protected static string getMorphoDiTaWord(string word, Dictionary<string,Dictionary<string,string[]>> dict, string morphCombination)
+        protected static string GetMorphoDiTaWord(string word, Dictionary<string,Dictionary<string,string[]>> dict, string morphCombination)
         {
             if (!dict.ContainsKey(word)) return null;
             else
@@ -181,7 +181,7 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        protected static string getUrlAnswer(string url)
+        protected static string GetUrlAnswer(string url)
         {
                using (WebClient client = new WebClient())
                 {
@@ -195,7 +195,7 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="answer"></param>
         /// <returns>Tagged sentence</returns>
-        protected static string getResultJsonVariableFromTagging(string answer)
+        protected static string GetResultJsonVariableFromTagging(string answer)
         {
             if (answer == "") return "";
             try
@@ -218,12 +218,12 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="sentence"></param>
         /// <returns></returns>
-        protected static Dictionary<string,string[]> analyzeSentenceAndReturnDictionary(string sentence)
+        protected static Dictionary<string,string[]> AnalyzeSentenceAndReturnDictionary(string sentence)
         {
             if (sentence == "") return null;
             string url = "http://lindat.mff.cuni.cz/services/morphodita/api/tag?data=" + sentence.Replace(" ","%20");
-            string answer = getUrlAnswer(url  + "&output=vertical");
-            answer = getResultJsonVariableFromTagging(answer);
+            string answer = GetUrlAnswer(url  + "&output=vertical");
+            answer = GetResultJsonVariableFromTagging(answer);
             string[] linesOfOneWord = Regex.Split(answer, @"\\n");
 
 
@@ -257,13 +257,13 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="coupleOfWords">Needs to be in nomitative singular if it is a noun</param>
         /// <returns></returns>
-        protected static Dictionary<string, Dictionary<string, string[]>> generateFormsOfWord(string coupleOfWords, string[] keys)
+        protected static Dictionary<string, Dictionary<string, string[]>> GenerateFormsOfWord(string coupleOfWords, string[] keys)
         {
             string url = "http://lindat.mff.cuni.cz/services/morphodita/api/generate?data=" + coupleOfWords;
 
-            string data = getUrlAnswer(url);
-            string results = getResultJsonOutputInGenerate(data);
-            var list = getDictionariesFromGeneratedRequest(coupleOfWords, results, keys);
+            string data = GetUrlAnswer(url);
+            string results = GetResultJsonOutputInGenerate(data);
+            var list = GetDictionariesFromGeneratedRequest(coupleOfWords, results, keys);
             return list;
         }
         /// <summary>
@@ -276,7 +276,7 @@ namespace BiblickyGenerator
         ///       string of word forms such as person, singular/plural etc...
         ///       example: NNMS1-----A----
         /// </returns>
-        private static Dictionary<string,Dictionary<string, string[]>> getDictionariesFromGeneratedRequest(string coupleOfWords, string dataResults, string[] keys)
+        private static Dictionary<string,Dictionary<string, string[]>> GetDictionariesFromGeneratedRequest(string coupleOfWords, string dataResults, string[] keys)
         {
 
             if (dataResults == "\\n") return null;
@@ -309,7 +309,7 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="data">data is an answer of HTTP request</param>
         /// <returns>returns just JSON variable result from generate request</returns>
-        protected static string getResultJsonOutputInGenerate(string data)
+        protected static string GetResultJsonOutputInGenerate(string data)
         {
             try
             {

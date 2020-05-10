@@ -10,11 +10,11 @@ namespace UnitTestBibleGenerator
     public class CreateFiles: BiblickyGenerator.FileManager
     {
         [TestMethod]
-        public void testCreateFilesWhenAlreadyCreated()
+        public void TestCreateFilesWhenAlreadyCreated()
         {
             Assert.AreEqual(true,manageDirectories());
         }
-        public void testCreateFilesWhenNotThere()
+        public void TestCreateFilesWhenNotThere()
         {
             Assert.AreEqual(true, manageDirectories());
         }

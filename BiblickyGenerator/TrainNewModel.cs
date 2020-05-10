@@ -19,13 +19,13 @@ namespace BiblickyGenerator
             InitializeComponent();
         }
 
-        private void button_exit_Click(object sender, EventArgs e)
+        private void Button_exit_Click(object sender, EventArgs e)
         {
             this.Close();
             
         }
 
-        private void button_Word2Vec_Model_train_Click(object sender, EventArgs e)
+        private void Button_Word2Vec_Model_train_Click(object sender, EventArgs e)
         {
             Hide();
               Word2VecModelCreate wc = new Word2VecModelCreate();
@@ -34,7 +34,7 @@ namespace BiblickyGenerator
             
          }
 
-        private void makeResultsVisible(bool succeded, string extension, string fileName)
+        private void MakeResultsVisible(bool succeded, string extension, string fileName)
         {
             if (succeded)
             {
@@ -61,7 +61,7 @@ namespace BiblickyGenerator
 
         }
 
-        private void resetWindow()
+        private void ResetWindow()
         {
             button_change_TXT.Visible = true;
             button3.Visible = true;
@@ -71,14 +71,16 @@ namespace BiblickyGenerator
          
         }
 
-        private void button_change_TXT_Click(object sender, EventArgs e)
+        private void Button_change_TXT_Click(object sender, EventArgs e)
         {
             Hide();
             while (true) {
-                OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                openFileDialog1.InitialDirectory = FileManager.getSpecifiedDirectory("PlainTexts");
-                openFileDialog1.Filter = "Formát txt (*.txt)|*.txt|Všechny formáty (*.*)|*.*";
-                openFileDialog1.RestoreDirectory = true;
+                OpenFileDialog openFileDialog1 = new OpenFileDialog
+                {
+                    InitialDirectory = FileManager.GetSpecifiedDirectory("PlainTexts"),
+                    Filter = "Formát txt (*.txt)|*.txt|Všechny formáty (*.*)|*.*",
+                    RestoreDirectory = true
+                };
 
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -88,12 +90,12 @@ namespace BiblickyGenerator
                         if (openFileDialog1.FileName.EndsWith(".txt"))
                         {
                             TransformTXTFile.TransformFile(openFileDialog1.FileName);
-                            makeResultsVisible(true, ".txt", openFileDialog1.FileName);
+                            MakeResultsVisible(true, ".txt", openFileDialog1.FileName);
                             break;
                         }
                         else
                         {
-                            makeResultsVisible(false, ".txt", openFileDialog1.FileName);
+                            MakeResultsVisible(false, ".txt", openFileDialog1.FileName);
                             Show();
                         }
                     }
@@ -104,7 +106,7 @@ namespace BiblickyGenerator
                 }
                 else
                 {
-                    resetWindow();
+                    ResetWindow();
                     Show();
                     break;
                     
@@ -113,7 +115,7 @@ namespace BiblickyGenerator
            
         }
 
-        private void textbox_warning_TextChanged(object sender, EventArgs e)
+        private void Textbox_warning_TextChanged(object sender, EventArgs e)
         {
 
         }

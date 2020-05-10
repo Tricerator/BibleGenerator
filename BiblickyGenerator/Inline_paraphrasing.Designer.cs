@@ -75,7 +75,7 @@
             this.button_paraphrase.TabIndex = 3;
             this.button_paraphrase.Text = "Parafrázovat";
             this.button_paraphrase.UseVisualStyleBackColor = true;
-            this.button_paraphrase.Click += new System.EventHandler(this.button_paraphrase_Click);
+            this.button_paraphrase.Click += new System.EventHandler(this.Button_paraphrase_Click);
             // 
             // button_back
             // 
@@ -85,7 +85,7 @@
             this.button_back.TabIndex = 4;
             this.button_back.Text = "Zpět";
             this.button_back.UseVisualStyleBackColor = true;
-            this.button_back.Click += new System.EventHandler(this.button_back_Click);
+            this.button_back.Click += new System.EventHandler(this.Button_back_Click);
             // 
             // textBox_output1
             // 
@@ -182,7 +182,7 @@
             this.label_output3.Size = new System.Drawing.Size(79, 25);
             this.label_output3.TabIndex = 14;
             this.label_output3.Text = "Výtup 3";
-            this.label_output3.Click += new System.EventHandler(this.label3_Click);
+          
             // 
             // label_output4
             // 
@@ -212,7 +212,7 @@
             this.button_saveResults.TabIndex = 17;
             this.button_saveResults.Text = "Uložit výsledky";
             this.button_saveResults.UseVisualStyleBackColor = true;
-            this.button_saveResults.Click += new System.EventHandler(this.button_saveResults_Click);
+            this.button_saveResults.Click += new System.EventHandler(this.Button_saveResults_Click);
             // 
             // button_reset
             // 
@@ -222,7 +222,7 @@
             this.button_reset.TabIndex = 18;
             this.button_reset.Text = "Resetovat";
             this.button_reset.UseVisualStyleBackColor = true;
-            this.button_reset.Click += new System.EventHandler(this.button_reset_Click);
+            this.button_reset.Click += new System.EventHandler(this.Button_reset_Click);
             // 
             // button_help
             // 

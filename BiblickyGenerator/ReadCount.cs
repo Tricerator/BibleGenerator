@@ -29,13 +29,12 @@ namespace BiblickyGenerator
             };
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
-           
-            long output;
-            if (long.TryParse(textBox1.Text, out output) && output >= 0)
+
+            if (long.TryParse(textBox1.Text, out long output) && output >= 0)
             {
-                parent.setNumberOfOneFile(output);
+                parent.SetNumberOfOneFile(output);
                 Close();
             }
             else
@@ -44,14 +43,11 @@ namespace BiblickyGenerator
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
+      
 
         private void ReadCount_Load(object sender, EventArgs e)
         {
-          }
+        }
  
 }
 }

@@ -33,7 +33,7 @@ namespace BiblickyGenerator
             txtb = null;
             usedMorphodita = false;
         }
-        public void clear()
+        public void Clear()
         {
             txtb.Text = "";
             output = "";

@@ -43,7 +43,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "Zpět do menu";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button_exit_Click);
+            this.button3.Click += new System.EventHandler(this.Button_exit_Click);
             // 
             // button_change_TXT
             // 
@@ -53,7 +53,7 @@
             this.button_change_TXT.TabIndex = 3;
             this.button_change_TXT.Text = "Uprav soubor .txt";
             this.button_change_TXT.UseVisualStyleBackColor = true;
-            this.button_change_TXT.Click += new System.EventHandler(this.button_change_TXT_Click);
+            this.button_change_TXT.Click += new System.EventHandler(this.Button_change_TXT_Click);
             // 
             // button_Word2Vec_Model_train
             // 
@@ -63,7 +63,7 @@
             this.button_Word2Vec_Model_train.TabIndex = 4;
             this.button_Word2Vec_Model_train.Text = "Natrénuj model";
             this.button_Word2Vec_Model_train.UseVisualStyleBackColor = true;
-            this.button_Word2Vec_Model_train.Click += new System.EventHandler(this.button_Word2Vec_Model_train_Click);
+            this.button_Word2Vec_Model_train.Click += new System.EventHandler(this.Button_Word2Vec_Model_train_Click);
             // 
             // textbox_warning
             // 
@@ -78,7 +78,7 @@
             this.textbox_warning.Text = "Soubor musí mít příponu .txt!";
             this.textbox_warning.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textbox_warning.Visible = false;
-            this.textbox_warning.TextChanged += new System.EventHandler(this.textbox_warning_TextChanged);
+            this.textbox_warning.TextChanged += new System.EventHandler(this.Textbox_warning_TextChanged);
             // 
             // textBox_result
             // 

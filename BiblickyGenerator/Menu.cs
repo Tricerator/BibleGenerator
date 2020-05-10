@@ -30,7 +30,7 @@ namespace BiblickyGenerator
         public Menu()
         {
             InitializeComponent();
-            FileManager.manageDirectories();
+            FileManager.ManageDirectories();
         }
 
         private void TrainNewModelButton_Click(object sender, EventArgs e)

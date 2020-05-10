@@ -125,8 +125,10 @@ namespace UnitTestBibleGenerator
             {
                 string sentence1 = "Moje děti jí malinu";
                 string answer1 = "Moje děti jí párek";
-                Dictionary<string, string> testDict1 = new Dictionary<string, string>();
-                testDict1.Add("malinu", "párek");
+                Dictionary<string, string> testDict1 = new Dictionary<string, string>
+                {
+                    { "malinu", "párek" }
+                };
                 string answer2 = useMorphoDiTa(sentence1, testDict1);
                 Assert.AreEqual(answer1, answer2);
 
@@ -154,13 +156,15 @@ namespace UnitTestBibleGenerator
         [TestMethod]
         public void TestUseMorphoDiTaVerbs()
        {
-        string sentence = "Šel jsem běhat";
-        string answer = "Šel jsem zpívat";
+      //  string sentence = "Šel jsem běhat";
+        //string answer = "Šel jsem zpívat";
 
-        Dictionary<string, string> TestDict1 = new Dictionary<string, string>();
-        TestDict1.Add("běhat", "zpívat");
-        //        Assert.AreEqual(answer, useMorphoDiTa(sentence, TestDict1));
-            }
+            Dictionary<string, string> TestDict1 = new Dictionary<string, string>
+            {
+                { "běhat", "zpívat" }
+            };
+            //        Assert.AreEqual(answer, useMorphoDiTa(sentence, TestDict1));
+        }
 
 
 }
