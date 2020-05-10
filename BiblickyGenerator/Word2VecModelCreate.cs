@@ -14,12 +14,10 @@ namespace BiblickyGenerator
     {
 
         private long NumberOfOneFile;
-        private string projectDirectory;
 
         private int NumberOfIterations;
         private int VectorLength;
         private int MinCountWords;
-        
 
 
 
@@ -31,12 +29,11 @@ namespace BiblickyGenerator
             InitializeComponent();
             resetAll();
             DictFilesInModel = new SortedDictionary<string, long[]>();
-            DirectoryName = "";
             FinalLengthOFModel = 0;
-            projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
             MinCountWords = 0;
             VectorLength = 0;
             NumberOfIterations = 0;
+            DirectoryName = "";
         }
 
         public void setNumberOfOneFile(long num)
@@ -56,7 +53,7 @@ namespace BiblickyGenerator
         private void LoadFiles()
         {
             
-            string path = projectDirectory + ".//SourceTXTFiles";
+            string path = FileManager.getSpecifiedDirectory("SourceTXTFiles");
             string[] files = Directory.GetFiles(path);
             if (files.Length == 0)
             {
@@ -110,8 +107,8 @@ namespace BiblickyGenerator
         
             return "everything is OK";
         }
-       
-        
+
+
         /// <summary>
         /// This method merges all files multiplied by chosen constant to a single file
         ///         which will be saved in TMP file. 
@@ -120,11 +117,11 @@ namespace BiblickyGenerator
         private string mergeAllFiles()
         {
 
-            string tmpFile = projectDirectory + "\\Temp\\" + textBox_fileName.Text + ".txt";
-         
-            foreach(var item in DictFilesInModel)
+            string tmpFile = FileManager.getSpecifiedDirectory("Temp") +"\\" + textBox_fileName.Text + ".txt";
+
+            foreach (var item in DictFilesInModel)
             {
-                string source = projectDirectory + "\\SourceTXTFiles\\" + item.Key.ToString() + ".txt";
+                string source = FileManager.getSpecifiedDirectory("SourceTXTFiles") + "\\" + item.Key.ToString() + ".txt";
                 for (int i = 0; i < item.Value[0]; i++)
                 {
                     

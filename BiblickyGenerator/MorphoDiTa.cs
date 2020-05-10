@@ -73,7 +73,16 @@ namespace BiblickyGenerator
             return resultSentence.ToString().Trim();
         }
 
-
+        /// <summary>
+        /// This method gets original word, the dictionary of generated words and original morphological combination
+        /// 
+        /// In this method I decide what to reeplece by what and what are the morphological combinations I want to be 
+        ///    the same
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="dict"></param>
+        /// <param name="morphCombination"></param>
+        /// <returns></returns>
         protected static string getMorphoDiTaWord(string word, Dictionary<string,Dictionary<string,string[]>> dict, string morphCombination)
         {
             if (!dict.ContainsKey(word)) return null;
@@ -113,7 +122,11 @@ namespace BiblickyGenerator
                 }
                         
         }
-
+        /// <summary>
+        /// Method cuts the JSON output
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns>Tagged sentence</returns>
         protected static string getResultJsonVariableFromTagging(string answer)
         {
             if (answer == "") return "";

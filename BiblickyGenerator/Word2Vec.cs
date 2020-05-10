@@ -21,8 +21,7 @@ namespace BiblickyGenerator
 
         public static void trainModel(string trainfile, int sizeOfVectors = 100, int minCount = 5, int iterations = 5)
         {
-            string outputFileName = Path.GetDirectoryName(trainfile) + "\\..\\" +
-            "Models\\" + Path.GetFileName(trainfile);
+            string outputFileName = FileManager.getSpecifiedDirectory("Models") + "\\" + Path.GetFileName(trainfile);
 
 
             var word2Vec = Word2VecBuilder.Create()
@@ -72,7 +71,13 @@ namespace BiblickyGenerator
 
                 foreach (var neightboor in closest)
                 {
-                    if (neightboor.Representation.WordOrNull.ToLower() == neightboor.Representation.WordOrNull)
+                    if ((neightboor.Representation.WordOrNull.ToLower() == neightboor.Representation.WordOrNull) && 
+                        (neightboor.Representation.WordOrNull != null) && 
+                        (
+                            (word.StartsWith("ne") && neightboor.Representation.WordOrNull.StartsWith("ne")) ||
+                            (!word.StartsWith("ne") && !neightboor.Representation.WordOrNull.StartsWith("ne"))
+                        )
+                        )
                     {
                         replacedWords.Add(word, neightboor.Representation.WordOrNull);
                         break;

@@ -52,7 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateFiles.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="Inline_paraphrasing.cs">
       <SubType>Form</SubType>
     </Compile>

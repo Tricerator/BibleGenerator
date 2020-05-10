@@ -22,10 +22,15 @@ namespace BiblickyGenerator
     /// </summary>
     public partial class Menu : Form
     {
+        /// <summary>
+        ///  FileManager.manageDirectories() method creates directories needed for the program, 
+        ///         mostly empty except for PlainTexts - there is one txt file
+        ///  
+        /// </summary>
         public Menu()
         {
             InitializeComponent();
-            CreateFiles.manageDirectories();
+            FileManager.manageDirectories();
         }
 
         private void TrainNewModelButton_Click(object sender, EventArgs e)

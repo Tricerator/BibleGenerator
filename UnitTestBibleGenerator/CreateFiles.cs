@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTestBibleGenerator
 {
     [TestClass]
-    public class CreateFiles: BiblickyGenerator.CreateFiles
+    public class CreateFiles: BiblickyGenerator.FileManager
     {
         [TestMethod]
         public void testCreateFilesWhenAlreadyCreated()

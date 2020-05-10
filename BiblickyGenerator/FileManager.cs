@@ -7,10 +7,22 @@ using System.Threading.Tasks;
 
 namespace BiblickyGenerator
 {
-    public class CreateFiles
+
+    /// <summary>
+    /// This class creates needed files for the program and 
+    ///        gives paths to directories
+    /// Most of the created directories are empty except PlainTexts where is 
+    ///    one little txt file for test purposes
+    /// </summary>
+    public class FileManager
     {
         private static string[] directories = { "Models", "PlainTexts", "Results", "SourceTXTFiles", "Temp" };
 
+
+        /// <summary>
+        /// This method creates file 
+        /// </summary>
+        /// <returns></returns>
         public static bool manageDirectories()
         {
 
@@ -48,8 +60,9 @@ namespace BiblickyGenerator
 
                         using (StreamWriter sw = new StreamWriter(File.Create(getMainDirectory() + "\\" + dir + "\\testFile.txt")))
                         {
-                            sw.WriteLine("Žluťoučký kůň byl včera večer doma, ale já o tom nevím.");
-                            sw.WriteLine();
+                            sw.WriteLine("Červený kůň byl včera večer doma, ale já o tom nevím.");
+                            sw.WriteLine("Modrý kůň tam nebyl. Zelený kůň byl tam, kde byl modrý kůň.");
+                            sw.WriteLine("Vlastně byl modrý kůň tam, kde nebyl červený kůň.");
                             sw.WriteLine("Byl jsem v té době v práci a šéf zrovna křičel: \"Hrom do tebe!\" Ale hrom nezahřměl...");
                         }
                     }

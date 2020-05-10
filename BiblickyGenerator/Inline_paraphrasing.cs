@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using System.Net;
+using System.Text.RegularExpressions;
+
 namespace BiblickyGenerator
 {
 
@@ -36,8 +38,9 @@ namespace BiblickyGenerator
         private Window[] arrayOfWindows;
         private Queue<Window> queueOfUsedWindows;
 
-       
-        private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
+
+        //  private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
+        private string ModelDir = FileManager.getSpecifiedDirectory("Models");
         public Inline_paraphrasing()
         {
             InitializeComponent();
@@ -63,13 +66,13 @@ namespace BiblickyGenerator
             else if (listBox_models.SelectedIndex >= 0)
             {
                 wndw = arrayOfWindows[queueOfUsedWindows.Count];
-                queueOfUsedWindows.Enqueue(wndw);
+                
                 try
                 {
                     if (checkBox_useMorphoDiTa.Checked == true) wndw.UsedMorphodita = true;
                     else                       wndw.UsedMorphodita = false;
                     ParaphraseText(wndw);
-                    
+              
                 }
                 catch (Exception ex)
                 {
@@ -125,8 +128,8 @@ namespace BiblickyGenerator
                 }
 
             }
-            window.Txtb.Text = window.Output;
-
+            window.Txtb.Text = TransformTXTFile.TransformStringBack(window.Output);
+            queueOfUsedWindows.Enqueue(window);
         }
 
 
@@ -187,23 +190,27 @@ namespace BiblickyGenerator
 
         private void button_saveResults_Click(object sender, EventArgs e)
         {
-            DateTime now = new DateTime();
-            
-            string pathOfNewFile = ModelDir + "\\..\\Results\\" + now.ToString().Replace(" ","_").Replace("/","-") + ".txt";
-            using (var sw = new StreamWriter(pathOfNewFile))
+
+
+            var myUniqueFileName = FileManager.getSpecifiedDirectory("Results") + "\\" + $@"{DateTime.Now.Ticks}.txt";
+            using (var sw = new StreamWriter(myUniqueFileName))
             {
                 for (int i = 0; i < queueOfUsedWindows.Count; i++)
                 {
                     Window w = queueOfUsedWindows.Dequeue();
-                    sw.WriteLine("Model: " + w.Model);
+                    string[] partsOfPath = Regex.Split(w.Model, @"\\");
+                    sw.WriteLine("Model: " + partsOfPath[partsOfPath.Length - 1]);
                     sw.WriteLine("Input: " + w.Input);
-                    sw.WriteLine("Output: " + w.Output);
+                    sw.WriteLine("Output: " + TransformTXTFile.TransformStringBack(w.Output));
                     if (w.UsedMorphodita) sw.WriteLine("MorphoDiTa: pouzita");
                     else sw.WriteLine("MorphoDiTa: nepouzita");
+                    sw.WriteLine();
+                   
 
                 }
 
             }
+            reset();
 
         }
     }
