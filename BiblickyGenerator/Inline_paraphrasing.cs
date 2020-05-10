@@ -20,7 +20,7 @@ namespace BiblickyGenerator
         private static Window[] arrayOfWindows = {w1,w2,w3,w4,w5 };
         
         //  private static Queue<Window> queueOfUsedWindows;
-        private static byte queueOfUsedWindows;
+        private static byte numberOfUsedWindows;
 
 
         //  private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
@@ -33,14 +33,14 @@ namespace BiblickyGenerator
                 listBox_models.Items.Add(Path.GetFileNameWithoutExtension(dir));
             }
             
-            queueOfUsedWindows = 0;
+            numberOfUsedWindows = 0;
 
         }
 
         private void Button_paraphrase_Click(object sender, EventArgs e)
         {
             
-            if (queueOfUsedWindows >= 5)
+            if (numberOfUsedWindows >= 5)
             {
                 string message = "Buď uložte výsledky do souboru, nebo je resetujte";
                 string title = "Chyba";
@@ -49,17 +49,17 @@ namespace BiblickyGenerator
             }
             else if (listBox_models.SelectedIndex >= 0)
             {
-                Window wndw = arrayOfWindows[queueOfUsedWindows];
+                Window wndw = arrayOfWindows[numberOfUsedWindows];
                 
-   //             try
+                try
                 {
                     if (checkBox_useMorphoDiTa.Checked == true) wndw.UsedMorphodita = true;
                     else                       wndw.UsedMorphodita = false;
                     ParaphraseText();
               
                 }
-  /*              catch (Exception ex)
-    //            {
+                catch (Exception ex)
+                {
                     if (ex is WebException
                         || ex is System.Net.Http.HttpRequestException
                         || ex is System.Net.Sockets.SocketException)
@@ -70,14 +70,14 @@ namespace BiblickyGenerator
                             "nebo zvolte moznost bez MorphoDiTy"; ;
                     }else throw;
                 }
-                */
+                
             }
 
         }
 
         private void ParaphraseText()
         {
-            Window window = arrayOfWindows[queueOfUsedWindows];
+            Window window = arrayOfWindows[numberOfUsedWindows];
             window.Model = ModelDir + "\\" + listBox_models.SelectedItem.ToString() + ".txt";
             
             window.Input = textBox_input.Text;
@@ -121,7 +121,7 @@ namespace BiblickyGenerator
                 window.Output = window.Txtb.Text;
             }
            
-            queueOfUsedWindows++;
+            numberOfUsedWindows++;
         }
 
 
@@ -149,7 +149,7 @@ namespace BiblickyGenerator
 
         private void Reset()
         {
-            queueOfUsedWindows = 0;
+            numberOfUsedWindows = 0;
             foreach (var window in arrayOfWindows)
             {
                     var wndw = window;
@@ -176,7 +176,7 @@ namespace BiblickyGenerator
             var myUniqueFileName = FileManager.GetSpecifiedDirectory("Results") + "\\" + $@"{DateTime.Now.Ticks}.txt";
             using (var sw = new StreamWriter(myUniqueFileName))
             {
-                for (int i = 0; i < queueOfUsedWindows; i++)
+                for (int i = 0; i < numberOfUsedWindows; i++)
                 {
                     Window w = arrayOfWindows[i];
                     if (w.Txtb.Text == "") break;
