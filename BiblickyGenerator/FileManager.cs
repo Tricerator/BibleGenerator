@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BiblickyGenerator
 {
 
@@ -16,10 +17,28 @@ namespace BiblickyGenerator
     /// </summary>
     public class FileManager
     {
-        public static char sep = Path.AltDirectorySeparatorChar;
+        public static string sep = Path.AltDirectorySeparatorChar + "";
 
         private static string[] directories = { "Models", "PlainTexts", "Results", "SourceTXTFiles", "Temp" };
 
+        private static void initializePathSeparator()
+        {
+
+            OperatingSystem os = Environment.OSVersion;
+            PlatformID pid = os.Platform;
+            switch (pid)
+            {
+                case PlatformID.Win32NT:
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.WinCE:
+                    sep = "\\";
+                    break;
+                default:
+                    sep = "/";
+                    break;
+            }
+        }
 
         /// <summary>
         /// This method creates file 
@@ -27,7 +46,7 @@ namespace BiblickyGenerator
         /// <returns></returns>
         public static bool ManageDirectories()
         {
-
+            initializePathSeparator();
             if (CreateFiles()) return true;
             else return false;
         } 

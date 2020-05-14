@@ -180,8 +180,7 @@ namespace BiblickyGenerator
                 {
                     Window w = arrayOfWindows[i];
                     if (w.Txtb.Text == "") break;
-                    string[] partsOfPath = w.Model.Split(FileManager.sep);
-                    sw.WriteLine("Model: " + partsOfPath[partsOfPath.Length - 1]);
+                    sw.WriteLine("Model: " + Path.GetFileName(w.Model));
                     sw.WriteLine("Input: " + w.Input);
                     if (w.UsedMorphodita)
                     {
