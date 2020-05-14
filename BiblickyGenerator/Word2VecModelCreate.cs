@@ -82,7 +82,7 @@ namespace BiblickyGenerator
             string answer = CheckTheForm();
             if (answer == "everything is OK")
             {
-                textBox_fileName.Text = "";
+                //textBox_fileName.Text = "";
                 string file = MergeAllFiles();
                 Word2Vec.TrainModel(file, VectorLength, MinCountWords, NumberOfIterations);
                 DeleteFile(file);
@@ -94,7 +94,7 @@ namespace BiblickyGenerator
 
         private string CheckTheForm()
         {
-            
+
             if (!int.TryParse(textBox_vectorSize.Text, out VectorLength)) return "Délka vektoru musí být celé číslo";
             else if (!int.TryParse(textBox_minimumAmountOfWords.Text, out MinCountWords)) return "Minimální počet slov musí být celé číslo";
             else if (!int.TryParse(textBox_numberOfIterations.Text, out NumberOfIterations)) return "Počet iterací musí být celé číslo";
@@ -104,7 +104,7 @@ namespace BiblickyGenerator
                 return "Jméno modelu není validní";
             }
             else if (FinalLengthOFModel <= 0) return "Nelze vyrobit prázdný model";
-        
+            else if (textBox_fileName.Text.Length == 0) return "Prázdné jméno souboru";
             return "everything is OK";
         }
 
