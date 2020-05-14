@@ -78,7 +78,7 @@ namespace BiblickyGenerator
         private void ParaphraseText()
         {
             Window window = arrayOfWindows[numberOfUsedWindows];
-            window.Model = ModelDir + "\\" + listBox_models.SelectedItem.ToString() + ".txt";
+            window.Model = ModelDir + FileManager.sep + listBox_models.SelectedItem.ToString() + ".txt";
             
             window.Input = textBox_input.Text;
 
@@ -173,14 +173,14 @@ namespace BiblickyGenerator
         {
 
 
-            var myUniqueFileName = FileManager.GetSpecifiedDirectory("Results") + "\\" + $@"{DateTime.Now.Ticks}.txt";
+            var myUniqueFileName = FileManager.GetSpecifiedDirectory("Results") + FileManager.sep + $@"{DateTime.Now.Ticks}.txt";
             using (var sw = new StreamWriter(myUniqueFileName))
             {
                 for (int i = 0; i < numberOfUsedWindows; i++)
                 {
                     Window w = arrayOfWindows[i];
                     if (w.Txtb.Text == "") break;
-                    string[] partsOfPath = Regex.Split(w.Model, @"\\");
+                    string[] partsOfPath = w.Model.Split(FileManager.sep);
                     sw.WriteLine("Model: " + partsOfPath[partsOfPath.Length - 1]);
                     sw.WriteLine("Input: " + w.Input);
                     if (w.UsedMorphodita)

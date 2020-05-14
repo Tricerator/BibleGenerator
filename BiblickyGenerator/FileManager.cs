@@ -16,6 +16,8 @@ namespace BiblickyGenerator
     /// </summary>
     public class FileManager
     {
+        public static char sep = Path.AltDirectorySeparatorChar;
+
         private static string[] directories = { "Models", "PlainTexts", "Results", "SourceTXTFiles", "Temp" };
 
 
@@ -44,7 +46,7 @@ namespace BiblickyGenerator
 
         public static string GetSpecifiedDirectory(string dir)
         {
-            if (directories.Contains(dir)) return GetMainDirectory() + "\\" + dir;
+            if (directories.Contains(dir)) return GetMainDirectory() + sep + dir;
             else return "ERROR";
         }
 
@@ -54,7 +56,7 @@ namespace BiblickyGenerator
             foreach (var dir in directories)
             {
 
-                string directoryPath = GetMainDirectory() + "\\" + dir;
+                string directoryPath = GetMainDirectory() + sep + dir;
                 if (!Directory.Exists(directoryPath))
                 {
 
@@ -62,7 +64,7 @@ namespace BiblickyGenerator
                     if(dir == "PlainTexts")
                     {
 
-                        using (StreamWriter sw = new StreamWriter(File.Create(GetMainDirectory() + "\\" + dir + "\\testFile.txt")))
+                        using (StreamWriter sw = new StreamWriter(File.Create(GetMainDirectory() + sep + dir + sep + "testFile.txt")))
                         {
                             sw.WriteLine("Červený kůň byl včera večer doma, ale já o tom nevím.");
                             sw.WriteLine("Modrý kůň tam nebyl. Zelený kůň byl tam, kde byl modrý kůň.");
