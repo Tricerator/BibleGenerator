@@ -37,9 +37,10 @@ namespace BiblickyGenerator
 
         }
 
+
         private void Button_paraphrase_Click(object sender, EventArgs e)
         {
-            
+           
             if (numberOfUsedWindows >= 5)
             {
                 string message = "Buď uložte výsledky do souboru, nebo je resetujte";
@@ -49,15 +50,16 @@ namespace BiblickyGenerator
             }
             else if (listBox_models.SelectedIndex >= 0)
             {
+                PrintWaiting();
                 Window wndw = arrayOfWindows[numberOfUsedWindows];
-                
-                try
-                {
+       //         try
+         //       {
                     if (checkBox_useMorphoDiTa.Checked == true) wndw.UsedMorphodita = true;
                     else                       wndw.UsedMorphodita = false;
+                    
                     ParaphraseText();
-              
-                }
+
+   /*             }
                 catch (Exception ex)
                 {
                     if (ex is WebException
@@ -66,10 +68,11 @@ namespace BiblickyGenerator
                     {
 
 
-                        wndw.Txtb.Text = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
-                            "nebo zvolte moznost bez MorphoDiTy"; ;
-                    }else throw;
-                }
+                        string message = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
+                            "nebo zvolte moznost bez MorphoDiTy";
+                        MessageBox.Show(message);
+ //                   }else throw;*/
+               // }
                 
             }
 
@@ -114,7 +117,11 @@ namespace BiblickyGenerator
                 }
 
             }
-            if (window.UsedMorphodita) window.Txtb.Text = window.Output;
+            if (window.UsedMorphodita)
+            {
+                window.Txtb.Text = TransformTXTFile.TransformStringBack(window.Output);
+                window.Output = window.Txtb.Text;
+            }
             else
             {
                 window.Txtb.Text = TransformTXTFile.TransformStringBack(window.Output);
@@ -122,6 +129,7 @@ namespace BiblickyGenerator
             }
            
             numberOfUsedWindows++;
+            textBox_waiting.Text = "Text parafrázován";
         }
 
 
@@ -144,11 +152,13 @@ namespace BiblickyGenerator
      
         private void Button_reset_Click(object sender, EventArgs e)
         {
+            
             Reset();
         }
 
         private void Reset()
         {
+            textBox_waiting.Text = "";
             numberOfUsedWindows = 0;
             foreach (var window in arrayOfWindows)
             {
@@ -159,7 +169,6 @@ namespace BiblickyGenerator
                     wndw.Model = "";
                     wndw.Txtb.Text = "";
             }
-            
             textBox_input.Text = "";
             checkBox_useMorphoDiTa.Checked = false;
             listBox_models.ClearSelected();
@@ -200,6 +209,11 @@ namespace BiblickyGenerator
             }
             Reset();
 
+        }
+
+        private void PrintWaiting()
+        {
+            textBox_waiting.Text = "probíhá parafrázování, pro velké modely je třeba strpení";
         }
     }
 }

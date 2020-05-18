@@ -10,22 +10,38 @@ namespace BiblickyGenerator
 {
     public class MorphoDiTa
     {
-                /// <summary>
-                /// 
-                /// </summary>
+        /// <summary>
+        /// No.	 Name 	Description
+        ///1 	 POS Part of Speech
+        ///2 	 SUBPOS Detailed Part of Speech
+        ///3 	 GENDER Gender
+        ///4 	 NUMBER Number
+        ///5 	 CASE Case
+        ///6 	 POSSGENDER Possessor's Gender
+        ///7 	 POSSNUMBER Possessor's Number
+        ///8 	 PERSON Person
+        ///9 	 TENSE Tense
+        ///10 	 GRADE Degree of comparison
+        ///11 	 NEGATION Negation
+        ///12 	 VOICE Voice
+        ///13 	 RESERVE1 Unused
+        ///14 	 RESERVE2 Unused
+        ///15 	 VAR Variant, Style, Register, Special Usage
 
-        private static readonly SortedSet<int> indexesNoun = new SortedSet<int>{ 1, 2, 4, 5, 10,11,12 };
-        private static readonly SortedSet<int> indexesAdjective = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
-        private static readonly SortedSet<int> indexesPronoun = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
-        private static readonly SortedSet<int> indexesNumeral = new SortedSet<int> { 1, 2, 3, 4, 5, 10, 11, 12 };
+        /// </summary>
 
-        private static readonly SortedSet<int> indexesVerb = new SortedSet<int> { 1, 2, 3, 4, 8,9,10,11,12 };
+        private static readonly SortedSet<int> indexesNoun = new SortedSet<int>{ 1, 2, 4 };
+        private static readonly SortedSet<int> indexesAdjective = new SortedSet<int> { 1, 2, 3, 4};
+        private static readonly SortedSet<int> indexesPronoun = new SortedSet<int> { 1, 2, 3, 4};
+        private static readonly SortedSet<int> indexesNumeral = new SortedSet<int> { 1, 2, 3, 4 };
 
-        private static readonly SortedSet<int> indexesAdverb = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
-        private static readonly SortedSet<int> indexesPreposition = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
-        private static readonly SortedSet<int> indexesConjunction = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesVerb = new SortedSet<int> { 1, 2, 3, 4, 8, 9 };
 
-        private static readonly SortedSet<int> indexesRest = new SortedSet<int> { 1, 2, 3, 4, 8, 9, 10, 11, 12 };
+        private static readonly SortedSet<int> indexesAdverb = new SortedSet<int> { 1, 2, 3, 4 };
+        private static readonly SortedSet<int> indexesPreposition = new SortedSet<int> { 1, 2, 3, 4};
+        private static readonly SortedSet<int> indexesConjunction = new SortedSet<int> { 1, 2, 3, 4 };
+
+        private static readonly SortedSet<int> indexesRest = new SortedSet<int> { 1, 2, 3, 4 };
 
 
 
@@ -60,29 +76,39 @@ namespace BiblickyGenerator
             {
                 basicFormOfWOrdsRequest.Append(word.Value + "%20");
             }
+            // Az potud vse v pohode...
 
             var basicForms = AnalyzeSentenceAndReturnDictionary(basicFormOfWOrdsRequest.ToString());
             string[] keys = basicForms.Keys.ToArray(); 
             StringBuilder sb = new StringBuilder();
             foreach (string line in basicForms.Keys)
-            {
+            { 
                 sb.Append(basicForms[line][0] + "%0A");
             }
-
+// potud dobry
             var DictionaryOfDictionariesOfGeneratedWords = GenerateFormsOfWord(sb.ToString(),keys);
+
+            Dictionary<string,string> basicFormOfGeneratedWord = new Dictionary<string, string>();
+            foreach(string line in basicForms.Keys)
+            {
+                basicFormOfGeneratedWord.Add(line, basicForms[line][0]);
+            }
 
 
 
             StringBuilder resultSentence = new StringBuilder();
-            string[] words = sentence.Split(' ');
+            string[] words = TransformTXTFile.TransformString(sentence).Split(' ');
             foreach(string word in words)
             {
-                if (wordsForReplacement.ContainsKey(word))
+                if (wordsForReplacement.ContainsKey(word.ToLower()))
                 {
                     string resultWord = wordsForReplacement[word];
                     string resultWordMorphology = dictOfMorphCOmbinations[word];
-                    string result = GetMorphoDiTaWord(resultWord,DictionaryOfDictionariesOfGeneratedWords,resultWordMorphology);
-                    resultSentence.Append(result + " ");
+                    //send normalize form
+
+                    string result = GetMorphoDiTaWord(basicFormOfGeneratedWord[resultWord],DictionaryOfDictionariesOfGeneratedWords,resultWordMorphology);
+                    if (result == null) resultSentence.Append(word + " ");
+                    else    resultSentence.Append(result + " ");
                 }
                 else
                 {
@@ -109,63 +135,30 @@ namespace BiblickyGenerator
             else
             {
                 Dictionary<string, string[]> line = dict[word];
+                List<string>[] arrayOfLists = new List<string>[16];
+                for(int i = 0; i < arrayOfLists.Length; i++)
+                {
+                    arrayOfLists[i] = new List<string>();
+                }
 
                 foreach (string key in line.Keys)
                 {
-
-                    char s = key[0];
-                    switch (s)
+                    int numOfSameChars = 0;
+                    if ((key[0] != morphCombination[0]) || (key[1] != morphCombination[1])) continue;
+                    else
                     {
-                        case 'N':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesNoun.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-
-                        case 'A':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesAdjective.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-
-                        case 'C':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesNumeral.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-
-                        case 'D':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesAdverb.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-
-                        case 'P':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesPronoun.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-                        case 'R':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesPreposition.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-                        default:
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesRest.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                            }
-                            return line[key][0];
-
+                        for(int i = 0; i < key.Length; i++)
+                        {
+                            if (key[i] == morphCombination[i]) numOfSameChars++;
+                        }
+                        arrayOfLists[numOfSameChars].Add(key);
                     }
                 }
-                               
+                for(int i = 15; i > 0; i--)
+                {
+                    if (arrayOfLists[i].Count == 0) continue;
+                    if (arrayOfLists[i].Count >= 1) return line[arrayOfLists[i][0]][0];
+                }               
             return null;
             }
         }
@@ -262,7 +255,7 @@ namespace BiblickyGenerator
             string url = "http://lindat.mff.cuni.cz/services/morphodita/api/generate?data=" + coupleOfWords;
 
             string data = GetUrlAnswer(url);
-            string results = GetResultJsonOutputInGenerate(data);
+            Dictionary<string,string> results = GetResultJsonOutputInGenerate(data);
             var list = GetDictionariesFromGeneratedRequest(coupleOfWords, results, keys);
             return list;
         }
@@ -276,29 +269,30 @@ namespace BiblickyGenerator
         ///       string of word forms such as person, singular/plural etc...
         ///       example: NNMS1-----A----
         /// </returns>
-        private static Dictionary<string,Dictionary<string, string[]>> GetDictionariesFromGeneratedRequest(string coupleOfWords, string dataResults, string[] keys)
+        private static Dictionary<string,Dictionary<string, string[]>> GetDictionariesFromGeneratedRequest(
+                            string coupleOfWords, Dictionary<string, string> dataResults, string[] keys)
         {
 
-            if (dataResults == "\\n") return null;
+            if (dataResults == null ) return null;
             else
             {
-                Dictionary<string, Dictionary<string, string[]>> DictionaryOfDictionaries = new Dictionary<string, Dictionary<string, string[]>>();
-                string[] lines = Regex.Split(dataResults, @"\n");
-                string[] originalWords = Regex.Split(coupleOfWords, "%20");
-                for (int k  = 0; k < keys.Length; k++)
+                Dictionary<string, Dictionary<string, string[]>> DictionaryOfDictionaries = new Dictionary
+                                                                            <string, Dictionary<string, string[]>>();
+                string[] lines = dataResults.Keys.ToArray();
+                string[] originalWords = Regex.Split(coupleOfWords, "%0A");
+                foreach (string key in dataResults.Keys)
                 {
-                    foreach (var line in lines)
-                    {
-                        if (line.Length == 0) continue;
-                        Dictionary<string, string[]> dict = new Dictionary<string, string[]>();
-                        string[] words = Regex.Split(line, @"\\t");
+                  
+                        if (dataResults[key] == "") continue;
+                    Dictionary<string, string[]> dict = new Dictionary<string, string[]>();
+                        string[] words = Regex.Split(dataResults[key], @"\\t");
                         for (int i = 0; i < words.Length; i += 3)
                         {
                             string[] values = { words[i], words[i + 1] };
                             if(!dict.ContainsKey(words[i+2])) dict.Add(words[i + 2], values);
                         }
-                        DictionaryOfDictionaries.Add(keys[k], dict);
-                    }
+                        DictionaryOfDictionaries.Add(key, dict);
+                   
                 }
                 return DictionaryOfDictionaries;
             }
@@ -309,7 +303,7 @@ namespace BiblickyGenerator
         /// </summary>
         /// <param name="data">data is an answer of HTTP request</param>
         /// <returns>returns just JSON variable result from generate request</returns>
-        protected static string GetResultJsonOutputInGenerate(string data)
+        protected static Dictionary<string,string> GetResultJsonOutputInGenerate(string data)
         {
             try
             {
@@ -318,13 +312,20 @@ namespace BiblickyGenerator
                 data = data.Split(']')[1];
                 //    ",\n \"result\": \"
                 data = Regex.Split(data, "\"result\": \\\"")[1];
-
-                data = Regex.Split(data, @"\\n")[0];
-                return data;
+                string[] linesOfData = Regex.Split(data, @"\\n");
+                Dictionary<string, string> result = new Dictionary<string, string>();
+                foreach(var line in linesOfData)
+                {
+                    if (line == "" || !line.Contains("\\t")) continue;
+                    string key = Regex.Split(line, @"\\t")[1];
+                    result.Add(key, line);
+                }
+              //  data = Regex.Split(data, @"\\n")[0];
+                return result;
             }
             catch (IndexOutOfRangeException)
             {
-                return "";
+                return null;
             }
            
         }
@@ -334,3 +335,136 @@ namespace BiblickyGenerator
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+                    char s = key[0];
+                    bool correct = true;
+                    switch (s)
+                    {
+                        case 'N':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesNoun.Contains(i))   && (key[i] != morphCombination[i]))
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct)
+                            {
+                                return line[key][0];
+                            }
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+
+                        case 'A':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesAdjective.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct) return line[key][0];
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+                        case 'C':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesNumeral.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct) return line[key][0];
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+                        case 'D':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesAdverb.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct) return line[key][0];
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+                        case 'P':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesPronoun.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct) return line[key][0];
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+                        case 'R':
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesPreposition.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct) return line[key][0];
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+                        default:
+                            for (int i = 0; i < key.Length; i++)
+                            {
+                                if ((indexesRest.Contains(i)) && (key[i] != morphCombination[i])) continue;
+                                {
+                                    correct = false;
+                                    break;
+                                }
+                            }
+                            if (correct) return line[key][0];
+                            else
+                            {
+                                correct = true;
+                                continue;
+                            }
+                    }*/

@@ -12,11 +12,11 @@ namespace UnitTestBibleGenerator
         [TestMethod]
         public void TestCreateFilesWhenAlreadyCreated()
         {
-            Assert.AreEqual(true,manageDirectories());
+            Assert.AreEqual(true,ManageDirectories());
         }
         public void TestCreateFilesWhenNotThere()
         {
-            Assert.AreEqual(true, manageDirectories());
+            Assert.AreEqual(true, ManageDirectories());
         }
 
 

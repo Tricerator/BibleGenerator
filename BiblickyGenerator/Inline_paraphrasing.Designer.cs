@@ -47,6 +47,8 @@
             this.button_saveResults = new System.Windows.Forms.Button();
             this.button_reset = new System.Windows.Forms.Button();
             this.button_help = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_waiting = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox_input
@@ -60,7 +62,7 @@
             // checkBox_useMorphoDiTa
             // 
             this.checkBox_useMorphoDiTa.AutoSize = true;
-            this.checkBox_useMorphoDiTa.Location = new System.Drawing.Point(1088, 261);
+            this.checkBox_useMorphoDiTa.Location = new System.Drawing.Point(1038, 261);
             this.checkBox_useMorphoDiTa.Name = "checkBox_useMorphoDiTa";
             this.checkBox_useMorphoDiTa.Size = new System.Drawing.Size(170, 24);
             this.checkBox_useMorphoDiTa.TabIndex = 2;
@@ -69,7 +71,7 @@
             // 
             // button_paraphrase
             // 
-            this.button_paraphrase.Location = new System.Drawing.Point(1101, 319);
+            this.button_paraphrase.Location = new System.Drawing.Point(1094, 359);
             this.button_paraphrase.Name = "button_paraphrase";
             this.button_paraphrase.Size = new System.Drawing.Size(129, 51);
             this.button_paraphrase.TabIndex = 3;
@@ -79,7 +81,7 @@
             // 
             // button_back
             // 
-            this.button_back.Location = new System.Drawing.Point(1101, 532);
+            this.button_back.Location = new System.Drawing.Point(1094, 521);
             this.button_back.Name = "button_back";
             this.button_back.Size = new System.Drawing.Size(129, 42);
             this.button_back.TabIndex = 4;
@@ -89,7 +91,7 @@
             // 
             // textBox_output1
             // 
-            this.textBox_output1.Location = new System.Drawing.Point(415, 59);
+            this.textBox_output1.Location = new System.Drawing.Point(386, 59);
             this.textBox_output1.Multiline = true;
             this.textBox_output1.Name = "textBox_output1";
             this.textBox_output1.ReadOnly = true;
@@ -98,7 +100,7 @@
             // 
             // textBox_output2
             // 
-            this.textBox_output2.Location = new System.Drawing.Point(752, 59);
+            this.textBox_output2.Location = new System.Drawing.Point(718, 59);
             this.textBox_output2.Multiline = true;
             this.textBox_output2.Name = "textBox_output2";
             this.textBox_output2.ReadOnly = true;
@@ -107,7 +109,7 @@
             // 
             // textBox_output4
             // 
-            this.textBox_output4.Location = new System.Drawing.Point(415, 319);
+            this.textBox_output4.Location = new System.Drawing.Point(386, 319);
             this.textBox_output4.Multiline = true;
             this.textBox_output4.Name = "textBox_output4";
             this.textBox_output4.ReadOnly = true;
@@ -116,7 +118,7 @@
             // 
             // textBox_output5
             // 
-            this.textBox_output5.Location = new System.Drawing.Point(752, 319);
+            this.textBox_output5.Location = new System.Drawing.Point(718, 319);
             this.textBox_output5.Multiline = true;
             this.textBox_output5.Name = "textBox_output5";
             this.textBox_output5.ReadOnly = true;
@@ -137,9 +139,9 @@
             this.listBox_models.FormattingEnabled = true;
             this.listBox_models.HorizontalScrollbar = true;
             this.listBox_models.ItemHeight = 20;
-            this.listBox_models.Location = new System.Drawing.Point(1088, 59);
+            this.listBox_models.Location = new System.Drawing.Point(1038, 59);
             this.listBox_models.Name = "listBox_models";
-            this.listBox_models.Size = new System.Drawing.Size(161, 184);
+            this.listBox_models.Size = new System.Drawing.Size(220, 184);
             this.listBox_models.Sorted = true;
             this.listBox_models.TabIndex = 10;
             // 
@@ -157,7 +159,7 @@
             // 
             this.label_output1.AutoSize = true;
             this.label_output1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label_output1.Location = new System.Drawing.Point(530, 22);
+            this.label_output1.Location = new System.Drawing.Point(495, 22);
             this.label_output1.Name = "label_output1";
             this.label_output1.Size = new System.Drawing.Size(79, 25);
             this.label_output1.TabIndex = 12;
@@ -167,7 +169,7 @@
             // 
             this.label_output2.AutoSize = true;
             this.label_output2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label_output2.Location = new System.Drawing.Point(865, 22);
+            this.label_output2.Location = new System.Drawing.Point(824, 22);
             this.label_output2.Name = "label_output2";
             this.label_output2.Size = new System.Drawing.Size(89, 25);
             this.label_output2.TabIndex = 13;
@@ -182,13 +184,12 @@
             this.label_output3.Size = new System.Drawing.Size(79, 25);
             this.label_output3.TabIndex = 14;
             this.label_output3.Text = "Výtup 3";
-          
             // 
             // label_output4
             // 
             this.label_output4.AutoSize = true;
             this.label_output4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label_output4.Location = new System.Drawing.Point(530, 272);
+            this.label_output4.Location = new System.Drawing.Point(495, 272);
             this.label_output4.Name = "label_output4";
             this.label_output4.Size = new System.Drawing.Size(79, 25);
             this.label_output4.TabIndex = 15;
@@ -198,7 +199,7 @@
             // 
             this.label_output5.AutoSize = true;
             this.label_output5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label_output5.Location = new System.Drawing.Point(865, 272);
+            this.label_output5.Location = new System.Drawing.Point(824, 272);
             this.label_output5.Name = "label_output5";
             this.label_output5.Size = new System.Drawing.Size(79, 25);
             this.label_output5.TabIndex = 16;
@@ -206,7 +207,7 @@
             // 
             // button_saveResults
             // 
-            this.button_saveResults.Location = new System.Drawing.Point(1101, 376);
+            this.button_saveResults.Location = new System.Drawing.Point(1094, 416);
             this.button_saveResults.Name = "button_saveResults";
             this.button_saveResults.Size = new System.Drawing.Size(129, 51);
             this.button_saveResults.TabIndex = 17;
@@ -216,7 +217,7 @@
             // 
             // button_reset
             // 
-            this.button_reset.Location = new System.Drawing.Point(1101, 433);
+            this.button_reset.Location = new System.Drawing.Point(1094, 308);
             this.button_reset.Name = "button_reset";
             this.button_reset.Size = new System.Drawing.Size(129, 45);
             this.button_reset.TabIndex = 18;
@@ -226,18 +227,41 @@
             // 
             // button_help
             // 
-            this.button_help.Location = new System.Drawing.Point(1101, 484);
+            this.button_help.Location = new System.Drawing.Point(1094, 473);
             this.button_help.Name = "button_help";
             this.button_help.Size = new System.Drawing.Size(129, 42);
             this.button_help.TabIndex = 19;
             this.button_help.Text = "Nápověda";
             this.button_help.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.Location = new System.Drawing.Point(1118, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 25);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Model";
+            // 
+            // textBox_waiting
+            // 
+            this.textBox_waiting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox_waiting.Location = new System.Drawing.Point(554, 539);
+            this.textBox_waiting.Multiline = true;
+            this.textBox_waiting.Name = "textBox_waiting";
+            this.textBox_waiting.ReadOnly = true;
+            this.textBox_waiting.Size = new System.Drawing.Size(456, 83);
+            this.textBox_waiting.TabIndex = 23;
+            // 
             // Inline_paraphrasing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1294, 627);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(1303, 644);
+            this.Controls.Add(this.textBox_waiting);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button_help);
             this.Controls.Add(this.button_reset);
             this.Controls.Add(this.button_saveResults);
@@ -257,7 +281,9 @@
             this.Controls.Add(this.button_paraphrase);
             this.Controls.Add(this.checkBox_useMorphoDiTa);
             this.Controls.Add(this.textBox_input);
+            this.ForeColor = System.Drawing.Color.DarkBlue;
             this.Name = "Inline_paraphrasing";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inline_paraphrasing";
             this.Load += new System.EventHandler(this.Inline_paraphrasing_Load);
             this.ResumeLayout(false);
@@ -286,5 +312,7 @@
         private System.Windows.Forms.Button button_saveResults;
         private System.Windows.Forms.Button button_reset;
         private System.Windows.Forms.Button button_help;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox_waiting;
     }
 }

@@ -21,7 +21,7 @@ namespace BiblickyGenerator
 
         private static string[] directories = { "Models", "PlainTexts", "Results", "SourceTXTFiles", "Temp" };
 
-        private static void initializePathSeparator()
+        private static void InitializePathSeparator()
         {
 
             OperatingSystem os = Environment.OSVersion;
@@ -46,7 +46,7 @@ namespace BiblickyGenerator
         /// <returns></returns>
         public static bool ManageDirectories()
         {
-            initializePathSeparator();
+            InitializePathSeparator();
             if (CreateFiles()) return true;
             else return false;
         } 

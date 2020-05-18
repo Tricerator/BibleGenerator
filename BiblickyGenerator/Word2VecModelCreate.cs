@@ -82,6 +82,7 @@ namespace BiblickyGenerator
             string answer = CheckTheForm();
             if (answer == "everything is OK")
             {
+                textBox_Error.Text = "Vytvářím model. Pro velká data mi to chvíli trvá";
                 //textBox_fileName.Text = "";
                 string file = MergeAllFiles();
                 Word2Vec.TrainModel(file, VectorLength, MinCountWords, NumberOfIterations);
