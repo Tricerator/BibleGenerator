@@ -247,12 +247,14 @@
             // textBox_waiting
             // 
             this.textBox_waiting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox_waiting.Location = new System.Drawing.Point(554, 539);
+            this.textBox_waiting.Location = new System.Drawing.Point(718, 532);
             this.textBox_waiting.Multiline = true;
             this.textBox_waiting.Name = "textBox_waiting";
             this.textBox_waiting.ReadOnly = true;
-            this.textBox_waiting.Size = new System.Drawing.Size(456, 83);
+            this.textBox_waiting.Size = new System.Drawing.Size(292, 83);
             this.textBox_waiting.TabIndex = 23;
+            this.textBox_waiting.Text = "Pro velké modely může parafrázování trvat delší dobu";
+            this.textBox_waiting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Inline_paraphrasing
             // 

@@ -8,6 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace BiblickyGenerator
 {
+    /// <summary>
+    /// This class provides a chance to compare outputs from 5 different models with/without MorphoDiTa
+    ///     and provides chance to save file into Results
+    /// </summary>
     
     public partial class Inline_paraphrasing : Form
     {
@@ -22,9 +26,11 @@ namespace BiblickyGenerator
         //  private static Queue<Window> queueOfUsedWindows;
         private static byte numberOfUsedWindows;
 
-
-        //  private string ModelDir = Environment.CurrentDirectory + "\\..\\..\\Models";
         private string ModelDir = FileManager.GetSpecifiedDirectory("Models");
+
+        /// <summary>
+        /// Sets trained models into ListBox
+        /// </summary>
         public Inline_paraphrasing()
         {
             InitializeComponent();
@@ -52,32 +58,35 @@ namespace BiblickyGenerator
             {
                 PrintWaiting();
                 Window wndw = arrayOfWindows[numberOfUsedWindows];
-       //         try
-         //       {
-                    if (checkBox_useMorphoDiTa.Checked == true) wndw.UsedMorphodita = true;
-                    else                       wndw.UsedMorphodita = false;
-                    
+
+                if (checkBox_useMorphoDiTa.Checked == true)
+                {
+                    wndw.UsedMorphodita = true;
+                    if (!CheckInternetConnection())
+                    {
+                        string message = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
+                            "nebo zvolte možnost parafrázování bez MorphoDiTy.";
+                        MessageBox.Show(message, "Problém s připojením k internetu");
+
+                    }
+                    else   ParaphraseText();
+
+                }
+                else
+                {
+                    wndw.UsedMorphodita = false;
                     ParaphraseText();
 
-   /*             }
-                catch (Exception ex)
-                {
-                    if (ex is WebException
-                        || ex is System.Net.Http.HttpRequestException
-                        || ex is System.Net.Sockets.SocketException)
-                    {
-
-
-                        string message = "Morphodita se nemohla spojit se serverem. Zkuste to za chvíli, " +
-                            "nebo zvolte moznost bez MorphoDiTy";
-                        MessageBox.Show(message);
- //                   }else throw;*/
-               // }
-                
+                }
             }
 
         }
 
+
+        /// <summary>
+        /// This method modifies input texts and sends it to Word2Vec with words to paraphrase
+        /// </summary>
+        
         private void ParaphraseText()
         {
             Window window = arrayOfWindows[numberOfUsedWindows];
@@ -209,6 +218,21 @@ namespace BiblickyGenerator
             }
             Reset();
 
+        }
+
+
+        public static bool CheckInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void PrintWaiting()
