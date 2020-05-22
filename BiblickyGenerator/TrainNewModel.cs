@@ -77,7 +77,7 @@ namespace BiblickyGenerator
             while (true) {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog
                 {
-                    InitialDirectory = FileManager.GetSpecifiedDirectory("PlainTexts"),
+                    InitialDirectory = DirectoryManager.GetSpecifiedDirectory("PlainTexts"),
                     Filter = "Formát txt (*.txt)|*.txt|Všechny formáty (*.*)|*.*",
                     RestoreDirectory = true
                 };

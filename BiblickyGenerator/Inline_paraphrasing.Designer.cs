@@ -238,11 +238,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(1118, 22);
+            this.label2.Location = new System.Drawing.Point(1113, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 25);
+            this.label2.Size = new System.Drawing.Size(76, 25);
             this.label2.TabIndex = 22;
-            this.label2.Text = "Model";
+            this.label2.Text = "Modely";
             // 
             // textBox_waiting
             // 
@@ -286,7 +286,7 @@
             this.ForeColor = System.Drawing.Color.DarkBlue;
             this.Name = "Inline_paraphrasing";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Inline_paraphrasing";
+            this.Text = "Parafrázování";
             this.Load += new System.EventHandler(this.Inline_paraphrasing_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -26,7 +26,7 @@ namespace BiblickyGenerator
         //  private static Queue<Window> queueOfUsedWindows;
         private static byte numberOfUsedWindows;
 
-        private string ModelDir = FileManager.GetSpecifiedDirectory("Models");
+        private string ModelDir = DirectoryManager.GetSpecifiedDirectory("Models");
 
         /// <summary>
         /// Sets trained models into ListBox
@@ -90,7 +90,7 @@ namespace BiblickyGenerator
         private void ParaphraseText()
         {
             Window window = arrayOfWindows[numberOfUsedWindows];
-            window.Model = ModelDir + FileManager.sep + listBox_models.SelectedItem.ToString() + ".txt";
+            window.Model = ModelDir + DirectoryManager.sep + listBox_models.SelectedItem.ToString() + ".txt";
             
             window.Input = textBox_input.Text;
 
@@ -191,7 +191,7 @@ namespace BiblickyGenerator
         {
 
 
-            var myUniqueFileName = FileManager.GetSpecifiedDirectory("Results") + FileManager.sep + $@"{DateTime.Now.Ticks}.txt";
+            var myUniqueFileName = DirectoryManager.GetSpecifiedDirectory("Results") + DirectoryManager.sep + $@"{DateTime.Now.Ticks}.txt";
             using (var sw = new StreamWriter(myUniqueFileName))
             {
                 for (int i = 0; i < numberOfUsedWindows; i++)

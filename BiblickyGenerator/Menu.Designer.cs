@@ -96,7 +96,7 @@
             this.Controls.Add(this.button_exit);
             this.Controls.Add(this.trainNewModelButton);
             this.Name = "Menu";
-            this.Text = "Form1";
+            this.Text = "Menu";
             this.Load += new System.EventHandler(this.Menu_Load);
             this.ResumeLayout(false);
 

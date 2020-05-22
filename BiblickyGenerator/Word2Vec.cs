@@ -21,7 +21,7 @@ namespace BiblickyGenerator
 
         public static void TrainModel(string trainfile, int sizeOfVectors = 100, int minCount = 5, int iterations = 5)
         {
-            string outputFileName = FileManager.GetSpecifiedDirectory("Models") + FileManager.sep + Path.GetFileName(trainfile);
+            string outputFileName = DirectoryManager.GetSpecifiedDirectory("Models") + DirectoryManager.sep + Path.GetFileName(trainfile);
 
 
             var word2Vec = Word2VecBuilder.Create()

@@ -53,7 +53,7 @@ namespace BiblickyGenerator
         private void LoadFiles()
         {
             
-            string path = FileManager.GetSpecifiedDirectory("SourceTXTFiles");
+            string path = DirectoryManager.GetSpecifiedDirectory("SourceTXTFiles");
             string[] files = Directory.GetFiles(path);
             if (files.Length == 0)
             {
@@ -118,11 +118,11 @@ namespace BiblickyGenerator
         private string MergeAllFiles()
         {
 
-            string tmpFile = FileManager.GetSpecifiedDirectory("Temp") + FileManager.sep + textBox_fileName.Text + ".txt";
+            string tmpFile = DirectoryManager.GetSpecifiedDirectory("Temp") + DirectoryManager.sep + textBox_fileName.Text + ".txt";
 
             foreach (var item in DictFilesInModel)
             {
-                string source = FileManager.GetSpecifiedDirectory("SourceTXTFiles") + FileManager.sep + item.Key.ToString() + ".txt";
+                string source = DirectoryManager.GetSpecifiedDirectory("SourceTXTFiles") + DirectoryManager.sep + item.Key.ToString() + ".txt";
                 for (int i = 0; i < item.Value[0]; i++)
                 {
                     
@@ -182,7 +182,7 @@ namespace BiblickyGenerator
             }
             else 
             {   
-                string file = DirectoryName + FileManager.sep + listBox_modelFiles.SelectedItem + ".txt";
+                string file = DirectoryName + DirectoryManager.sep + listBox_modelFiles.SelectedItem + ".txt";
 
                 
 

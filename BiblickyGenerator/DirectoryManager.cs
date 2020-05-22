@@ -15,7 +15,7 @@ namespace BiblickyGenerator
     /// Most of the created directories are empty except PlainTexts where is 
     ///    one little txt file for test purposes
     /// </summary>
-    public class FileManager
+    public class DirectoryManager
     {
         public static string sep = Path.AltDirectorySeparatorChar + "";
 
