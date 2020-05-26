@@ -11,6 +11,8 @@ namespace BiblickyGenerator
     public class MorphoDiTa
     {
         /// <summary>
+        /// Morphological table 
+        /// 
         /// No.	 Name 	Description
         ///1 	 POS Part of Speech
         ///2 	 SUBPOS Detailed Part of Speech
@@ -29,24 +31,6 @@ namespace BiblickyGenerator
         ///15 	 VAR Variant, Style, Register, Special Usage
 
         /// </summary>
-
-        private static readonly SortedSet<int> indexesNoun = new SortedSet<int>{ 1, 2, 4 };
-        private static readonly SortedSet<int> indexesAdjective = new SortedSet<int> { 1, 2, 3, 4};
-        private static readonly SortedSet<int> indexesPronoun = new SortedSet<int> { 1, 2, 3, 4};
-        private static readonly SortedSet<int> indexesNumeral = new SortedSet<int> { 1, 2, 3, 4 };
-
-        private static readonly SortedSet<int> indexesVerb = new SortedSet<int> { 1, 2, 3, 4, 8, 9 };
-
-        private static readonly SortedSet<int> indexesAdverb = new SortedSet<int> { 1, 2, 3, 4 };
-        private static readonly SortedSet<int> indexesPreposition = new SortedSet<int> { 1, 2, 3, 4};
-        private static readonly SortedSet<int> indexesConjunction = new SortedSet<int> { 1, 2, 3, 4 };
-
-        private static readonly SortedSet<int> indexesRest = new SortedSet<int> { 1, 2, 3, 4 };
-
-
-
-
-
 
         /// <summary>
         /// 
@@ -76,7 +60,6 @@ namespace BiblickyGenerator
             {
                 basicFormOfWOrdsRequest.Append(word.Value + "%20");
             }
-            // Az potud vse v pohode...
 
             var basicForms = AnalyzeSentenceAndReturnDictionary(basicFormOfWOrdsRequest.ToString());
             string[] keys = basicForms.Keys.ToArray(); 
@@ -85,7 +68,6 @@ namespace BiblickyGenerator
             { 
                 sb.Append(basicForms[line][0] + "%0A");
             }
-// potud dobry
             var DictionaryOfDictionariesOfGeneratedWords = GenerateFormsOfWord(sb.ToString(),keys);
 
             Dictionary<string,string> basicFormOfGeneratedWord = new Dictionary<string, string>();
@@ -330,141 +312,7 @@ namespace BiblickyGenerator
            
         }
 
-      //  protected string getDictionaryOfgeneratedWords
-
+ 
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-                    char s = key[0];
-                    bool correct = true;
-                    switch (s)
-                    {
-                        case 'N':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesNoun.Contains(i))   && (key[i] != morphCombination[i]))
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct)
-                            {
-                                return line[key][0];
-                            }
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-
-                        case 'A':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesAdjective.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct) return line[key][0];
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-                        case 'C':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesNumeral.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct) return line[key][0];
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-                        case 'D':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesAdverb.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct) return line[key][0];
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-                        case 'P':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesPronoun.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct) return line[key][0];
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-                        case 'R':
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesPreposition.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct) return line[key][0];
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-                        default:
-                            for (int i = 0; i < key.Length; i++)
-                            {
-                                if ((indexesRest.Contains(i)) && (key[i] != morphCombination[i])) continue;
-                                {
-                                    correct = false;
-                                    break;
-                                }
-                            }
-                            if (correct) return line[key][0];
-                            else
-                            {
-                                correct = true;
-                                continue;
-                            }
-                    }*/
