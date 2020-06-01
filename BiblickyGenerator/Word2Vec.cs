@@ -79,7 +79,14 @@ namespace BiblickyGenerator
                         )
                         )
                     {
-                        if(!replacedWords.ContainsKey(word))  replacedWords.Add(word, neightboor.Representation.WordOrNull);
+                        if (!replacedWords.ContainsKey(word))
+                        {
+                            replacedWords.Add(word, neightboor.Representation.WordOrNull);
+                            if (word != word.ToLower() && !replacedWords.ContainsKey(word.ToLower()))
+                            {   
+                                replacedWords.Add(word.ToLower(), neightboor.Representation.WordOrNull);
+                            }
+                        }
                         break;
                     }
                 }

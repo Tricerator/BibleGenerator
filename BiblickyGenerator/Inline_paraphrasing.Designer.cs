@@ -141,7 +141,7 @@
             this.listBox_models.ItemHeight = 20;
             this.listBox_models.Location = new System.Drawing.Point(1038, 59);
             this.listBox_models.Name = "listBox_models";
-            this.listBox_models.Size = new System.Drawing.Size(220, 184);
+            this.listBox_models.Size = new System.Drawing.Size(230, 184);
             this.listBox_models.Sorted = true;
             this.listBox_models.TabIndex = 10;
             // 
@@ -233,6 +233,7 @@
             this.button_help.TabIndex = 19;
             this.button_help.Text = "Nápověda";
             this.button_help.UseVisualStyleBackColor = true;
+            this.button_help.Click += new System.EventHandler(this.button_help_Click);
             // 
             // label2
             // 
@@ -261,7 +262,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1303, 644);
+            this.ClientSize = new System.Drawing.Size(1290, 644);
             this.Controls.Add(this.textBox_waiting);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button_help);

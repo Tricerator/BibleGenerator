@@ -47,11 +47,12 @@ namespace BiblickyGenerator
             Dictionary<string, string[]> dict = AnalyzeSentenceAndReturnDictionary(sentence);
 
             Dictionary<string, string> dictOfMorphCOmbinations = new Dictionary<string, string>();
-            foreach(var selectedWord in dict.Keys)
+            foreach (var selectedWord in dict.Keys)
             {
                 if (wordsForReplacement.ContainsKey(selectedWord))
                 {
-                    dictOfMorphCOmbinations.Add(selectedWord, dict[selectedWord][1]);
+                    if (!dictOfMorphCOmbinations.ContainsKey(selectedWord))
+                        dictOfMorphCOmbinations.Add(selectedWord, dict[selectedWord][1]);
                 }
             }
 
@@ -62,39 +63,66 @@ namespace BiblickyGenerator
             }
 
             var basicForms = AnalyzeSentenceAndReturnDictionary(basicFormOfWOrdsRequest.ToString());
-            string[] keys = basicForms.Keys.ToArray(); 
+            string[] keys = basicForms.Keys.ToArray();
             StringBuilder sb = new StringBuilder();
             foreach (string line in basicForms.Keys)
-            { 
+            {
                 sb.Append(basicForms[line][0] + "%0A");
             }
-            var DictionaryOfDictionariesOfGeneratedWords = GenerateFormsOfWord(sb.ToString(),keys);
+            var DictionaryOfDictionariesOfGeneratedWords = GenerateFormsOfWord(sb.ToString(), keys);
 
-            Dictionary<string,string> basicFormOfGeneratedWord = new Dictionary<string, string>();
-            foreach(string line in basicForms.Keys)
+            Dictionary<string, string> basicFormOfGeneratedWord = new Dictionary<string, string>();
+            foreach (string line in basicForms.Keys)
             {
-                basicFormOfGeneratedWord.Add(line, basicForms[line][0]);
+                if (!basicFormOfGeneratedWord.ContainsKey(line))
+                    basicFormOfGeneratedWord.Add(line, basicForms[line][0]);
             }
 
 
 
             StringBuilder resultSentence = new StringBuilder();
             string[] words = TransformTXTFile.TransformString(sentence).Split(' ');
-            foreach(string word in words)
+            foreach (string word in words)
             {
                 if (wordsForReplacement.ContainsKey(word.ToLower()))
                 {
-                    string resultWord = wordsForReplacement[word];
-                    string resultWordMorphology = dictOfMorphCOmbinations[word];
+                    try
+                    {
+                    string resultWord = wordsForReplacement[word.ToLower()];
+                    string resultWordMorphology = dictOfMorphCOmbinations[word.ToLower()];
                     //send normalize form
 
-                    string result = GetMorphoDiTaWord(basicFormOfGeneratedWord[resultWord],DictionaryOfDictionariesOfGeneratedWords,resultWordMorphology);
-                    if (result == null) resultSentence.Append(word + " ");
-                    else    resultSentence.Append(result + " ");
+                    
+                        string result = GetMorphoDiTaWord(basicFormOfGeneratedWord[resultWord], DictionaryOfDictionariesOfGeneratedWords, resultWordMorphology);
+                        if (result == null)
+                        {
+                            if (word.Length > 2 || TransformTXTFile.ContainsDangerousChar(word) == 'n')
+                                resultSentence.Append(" " + word);
+                            else resultSentence.Append(word);
+
+                        }
+                        else
+                        {
+                            if (result.Length > 2 || TransformTXTFile.ContainsDangerousChar(result) == 'n')
+                                resultSentence.Append(" " + result);
+                            else resultSentence.Append(result);
+
+                        }
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        resultSentence.Append(" " + word );
+                        continue;
+                    }
+
                 }
                 else
                 {
-                    resultSentence.Append(word + " ");
+                    if (word.Length > 2 || TransformTXTFile.ContainsDangerousChar(word) == 'n')
+                        resultSentence.Append(" " + word);
+                    else resultSentence.Append(word);
+
+
                 }
 
             }
@@ -133,7 +161,7 @@ namespace BiblickyGenerator
                         {
                             if (key[i] == morphCombination[i]) numOfSameChars++;
                         }
-                        arrayOfLists[numOfSameChars].Add(key);
+                        if(!arrayOfLists[numOfSameChars].Contains(key))   arrayOfLists[numOfSameChars].Add(key);
                     }
                 }
                 for(int i = 15; i > 0; i--)
@@ -273,7 +301,7 @@ namespace BiblickyGenerator
                             string[] values = { words[i], words[i + 1] };
                             if(!dict.ContainsKey(words[i+2])) dict.Add(words[i + 2], values);
                         }
-                        DictionaryOfDictionaries.Add(key, dict);
+                        if(!DictionaryOfDictionaries.ContainsKey(key))  DictionaryOfDictionaries.Add(key, dict);
                    
                 }
                 return DictionaryOfDictionaries;
@@ -291,7 +319,7 @@ namespace BiblickyGenerator
             {
                 //this line prevents empty inputs to shut down the app
                 data += "\"\\n";
-                data = data.Split(']')[1];
+               // data = data.Split(']')[1];
                 //    ",\n \"result\": \"
                 data = Regex.Split(data, "\"result\": \\\"")[1];
                 string[] linesOfData = Regex.Split(data, @"\\n");
@@ -300,7 +328,7 @@ namespace BiblickyGenerator
                 {
                     if (line == "" || !line.Contains("\\t")) continue;
                     string key = Regex.Split(line, @"\\t")[1];
-                    result.Add(key, line);
+                    if(!result.ContainsKey(key))   result.Add(key, line);
                 }
               //  data = Regex.Split(data, @"\\n")[0];
                 return result;

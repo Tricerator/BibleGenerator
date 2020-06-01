@@ -19,6 +19,7 @@ namespace UnitTestBibleGenerator
         public void TestFromDangerToNormal()
         {
 
+
             string someString = "`1234567890-;'[p=0-=098\"097654~!@#$%^&*()_";
             Assert.AreEqual(someString, TransformStringBack(TransformString(someString)));
             string answer = TransformStringBack(" .  .  . ");
@@ -35,14 +36,22 @@ namespace UnitTestBibleGenerator
         [TestMethod]
         public void TestFinalOutput()
         {
-            string someString = "Ahoj, ahoj, ahoj.";
+            string someString = "...";
+            Assert.AreEqual(someString, TransformStringBack(TransformString(someString)));
+
+
+            someString = "Ahoj, ahoj, ahoj.";
             Assert.AreEqual(someString, TransformStringBack(TransformString(someString)));
 
             someString = "Ahoj, ahoj.";
             Assert.AreEqual(someString, TransformStringBack("Ahoj ,  ahoj . "));
 
+            Assert.AreEqual(someString, TransformStringBack(someString));
+            someString = " ahojDa, to je teda třída...";
+            Assert.AreEqual(someString, TransformStringBack(someString));
 
-
+            someString = "Já jsem ,  který jsem. "; 
+            Assert.AreEqual("Já jsem, který jsem. ",TransformStringBack(someString));
 
         }
 

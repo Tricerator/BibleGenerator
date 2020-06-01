@@ -104,7 +104,7 @@
             this.Controls.Add(this.button_change_TXT);
             this.Controls.Add(this.button3);
             this.Name = "TrainNewModel";
-            this.Text = "Natrenovat model";
+            this.Text = "Natrénovat model";
             this.ResumeLayout(false);
             this.PerformLayout();
 

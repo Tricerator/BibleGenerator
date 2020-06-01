@@ -15,7 +15,7 @@ namespace BiblickyGenerator
     public class TransformTXTFile
     {
         private static char[] bannedChars = { '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',
-                               '-', '.', ',','/','\\','\'','"',';','}',']','{','[','|','?','>','<'
+                               '-', '.', ',','/','\\','\'','"',';','}',']','{','[','|','?','>','<','¨'
                                ,'+','=',':','“', '„' };
 
         //suitable for czech and english chars
@@ -58,6 +58,7 @@ namespace BiblickyGenerator
                     sb.Append(" " + line[i] + " ");
                 }
                 else sb.Append(line[i]);
+
             }
             return sb.ToString();
 
@@ -71,20 +72,24 @@ namespace BiblickyGenerator
         public static string TransformStringBack(string line)
         {
             if (line.Length == 0) return "";
-            StringBuilder sb = new StringBuilder(line[0]);
-            for (int i = 0; i < line.Length - 1; i++)
+            if (line.Length < 3) return line;
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < line.Length; i++)
             {
-                if (bannedChars.Contains(line[i + 1]))
+                if ((i <= line.Length - 3) && bannedChars.Contains(line[i + 1]) && (line[i] == ' ') && (line[i+2] == ' '))
                 {
                     sb.Append(line[i + 1]);
-                    i++;
-                    i++;
+                    i+=2;
                 }
+                else if ((i <= line.Length - 2) && (line[i] == ' ') && (line[i + 1] == ' ')) continue;
                 else
                 {
                     sb.Append(line[i]);
                 }
             }
+         //   if (line[line.Length - 3] != ' ') sb.Append(line[line.Length - 1]);
+            
             return sb.ToString();
         }
         /// <summary>
@@ -178,6 +183,19 @@ namespace BiblickyGenerator
 
 
         }
+
+
+        public static char ContainsDangerousChar(string word)
+        {
+            foreach(char c in word)
+            {
+                if (bannedChars.Contains(c)) return c;
+            }
+            return 'n';
+        }
+
+
+
 
         /// <summary>
         /// This method tries to detect names and all non-names words 

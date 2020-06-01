@@ -69,13 +69,13 @@ namespace BiblickyGenerator
                         MessageBox.Show(message, "Problém s připojením k internetu");
 
                     }
-                    else   ParaphraseText();
+                    else   SendTextToParaphrase();
 
                 }
                 else
                 {
                     wndw.UsedMorphodita = false;
-                    ParaphraseText();
+                    SendTextToParaphrase();
 
                 }
             }
@@ -86,14 +86,15 @@ namespace BiblickyGenerator
         /// <summary>
         /// This method modifies input texts and sends it to Word2Vec with words to paraphrase
         /// </summary>
-        
-        private void ParaphraseText()
+
+        private void SendTextToParaphrase()
         {
             Window window = arrayOfWindows[numberOfUsedWindows];
             window.Model = ModelDir + DirectoryManager.sep + listBox_models.SelectedItem.ToString() + ".txt";
-            
+
             window.Input = textBox_input.Text;
 
+            /*
             string normalizeString = TransformTXTFile.TransformString(window.Input);
             string[] words = normalizeString.Split(' ');
             List<string> rightWords = new List<string>();
@@ -135,7 +136,10 @@ namespace BiblickyGenerator
             {
                 window.Txtb.Text = TransformTXTFile.TransformStringBack(window.Output);
                 window.Output = window.Txtb.Text;
-            }
+            }*/
+
+            window.Output = ParaphraseText.Paraphrase(window.Input,window.Model,window.UsedMorphodita);
+            window.Txtb.Text = window.Output;
            
             numberOfUsedWindows++;
             textBox_waiting.Text = "Text parafrázován";
@@ -238,6 +242,17 @@ namespace BiblickyGenerator
         private void PrintWaiting()
         {
             textBox_waiting.Text = "probíhá parafrázování, pro velké modely je třeba strpení";
+        }
+
+        private void button_help_Click(object sender, EventArgs e)
+        {
+
+            string help = "Nacházíte se v módu pro parafrázování. Pokud chcete parafrázovat libovolný text, musíte mít předem"
+                + " natrénovaný alespoň jeden model. Vložte váš text do bílého okna a poté vyberte model. Bez vybraného modelu nelze parafrázovat."
+                + " Pokud chcete použít MorphoDiTu, musíte být připojeni k internetu. Pokud bude špatné či žádné připojení, program vás sám upozorní."
+                + " pokud chcete výsledky uložit či resetovat, všechny dosavadní výsledky se smažou. Uložené výsledky najdete ve složce Results v souboru s nejvyšším číslem v názvu."
+                + " Pokud budete mít pět parafrázovaných odpovědí, program vás při dalším pokusu o parafrázování zarazí a navede vás buď k uložení či resetování výsledků.";
+            MessageBox.Show(help);
         }
     }
 }
