@@ -267,8 +267,15 @@ namespace BiblickyGenerator
 
         }
 
-      
-      
+        private void button_helpUser_Click(object sender, EventArgs e)
+        {
+            string help = "Nacházíte se v módu pro trénování modelu. Vyberte po jednom zdrojové soubory, které chcete "
+                + "použít pro tvorbu modelu a stiskněte \"Přidej\" a potom zadejte počet. Pokud chcete volbu provést znova, či "
+                + "odebrat text, vyberte text ve sloupečku \"model\" a zadejte \"Zpět\". "
+                + "Až budete mít zvolené vstupné texty, zadejte jméno souboru. Můžete změnit parametry jako velikost (dimenzi) vektoru, počet iterací či minimální "
+                + "počet výskytu slova, pro začátek doporučuji parametry nechat tak, jak jsou. Nakonec zmáčkněte \"Vytvořit model\".";
+            MessageBox.Show(help);
+        }
     }
 }
 

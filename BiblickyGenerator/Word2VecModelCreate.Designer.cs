@@ -363,6 +363,7 @@
             this.button_helpUser.TabIndex = 31;
             this.button_helpUser.Text = "Nápověda";
             this.button_helpUser.UseVisualStyleBackColor = true;
+            this.button_helpUser.Click += new System.EventHandler(this.button_helpUser_Click);
             // 
             // Word2VecModelCreate
             // 
