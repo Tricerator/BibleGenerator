@@ -163,7 +163,7 @@
             this.label_output1.Name = "label_output1";
             this.label_output1.Size = new System.Drawing.Size(79, 25);
             this.label_output1.TabIndex = 12;
-            this.label_output1.Text = "Výtup 1";
+            this.label_output1.Text = "Výstup 1";
             // 
             // label_output2
             // 
@@ -183,7 +183,7 @@
             this.label_output3.Name = "label_output3";
             this.label_output3.Size = new System.Drawing.Size(79, 25);
             this.label_output3.TabIndex = 14;
-            this.label_output3.Text = "Výtup 3";
+            this.label_output3.Text = "Výstup 3";
             // 
             // label_output4
             // 
@@ -193,7 +193,7 @@
             this.label_output4.Name = "label_output4";
             this.label_output4.Size = new System.Drawing.Size(79, 25);
             this.label_output4.TabIndex = 15;
-            this.label_output4.Text = "Výtup 4";
+            this.label_output4.Text = "Výstup 4";
             // 
             // label_output5
             // 
@@ -203,7 +203,7 @@
             this.label_output5.Name = "label_output5";
             this.label_output5.Size = new System.Drawing.Size(79, 25);
             this.label_output5.TabIndex = 16;
-            this.label_output5.Text = "Výtup 5";
+            this.label_output5.Text = "Výstup 5";
             // 
             // button_saveResults
             // 
