@@ -1,33 +1,78 @@
-Program:
+# BibleGenerator
 
-1. Načte předtrénovaný Word2Vec model, případně umožní jeho trénink (TrainNewModel).
-2. Načte vstupní biblický text (pravděpodobně ve formátu .txt).
-3. Pomocí morfologické analýzy (MorphoDiTa) zjistí základní tvary slov a jejich gramatické kategorie.
-4. Najde významově blízká slova pomocí Word2Vec.
-5. Parafrázuje (nahrazuje) starší, archaická nebo neobvyklá slova modernějšími ekvivalenty.
-6. Umožní uživateli interaktivní práci s textem přes grafické rozhraní (WinForms).
+**BibleGenerator** je nástroj vytvořený jako bakalářská práce na MFF UK, který slouží k modernizaci biblického textu pomocí metod z oblasti zpracování přirozeného jazyka (NLP). Projekt využívá model **Word2Vec** k hledání významově blízkých slov a **MorphoDiTa** k morfologické analýze. Aplikace má grafické rozhraní ve Windows Forms.
 
-Řešení (BiblickyGenerator.sln): Hlavní soubor řešení pro Visual Studio.
+---
 
-Hlavní projekt (BiblickyGenerator):
-  
-  UI komponenty (*.Designer.cs, *.resx):
-    
-    *Inline_paraphrasing*, *Menu*, *TrainNewModel*, *ReadCount*, *Word2VecModelCreate* 
-    
-                – okna, která zajišťují interaktivní práci s aplikací (např. načítání modelu, výběr textů).
+## Funkce programu
 
-  Jádro aplikace:
-    *Program.cs*: vstupní bod aplikace.
-    
-    *Word2Vec.cs*: obsluha Word2Vec modelu (pravděpodobně zabaleno přes .dll knihovnu Word2Vec.Net.dll).
-    
-    *TransformTXTFile.cs*: transformace textu – zde se pravděpodobně odehrává hlavní modernizace textu.
-    
-    *MorphoDiTa.cs*: napovídá použití knihovny MorphoDiTa od ÚFALu pro morfologickou analýzu (např. lemmatizaci).
-    
-    *ParaphraseText.cs*: soubor odpovídající za samotné parafrázování (pravděpodobně nahrazuje stará slova novými pomocí Word2Vec).
-    
-    *DirectoryManager.cs*: práce se souborovým systémem (načítání/schovávání textů, modelů apod.).
-    
-    *Window.cs*: možná hlavní řídící logika nebo centrální formulář aplikace.
+1. **Načtení Word2Vec modelu**  
+   Možnost načíst předtrénovaný model nebo spustit vlastní trénink (`TrainNewModel`).
+
+2. **Zpracování biblického textu**  
+   Načítá vstupní text (formát `.txt`), například ve starobylém jazyce.
+
+3. **Morfologická analýza (MorphoDiTa)**  
+   Zjišťuje základní tvary a gramatické vlastnosti slov.
+
+4. **Hledání významově podobných slov (Word2Vec)**  
+   Pro každé slovo hledá moderní ekvivalenty zachovávající význam.
+
+5. **Parafrázování textu**  
+   Nahrazuje archaická nebo nesrozumitelná slova jejich moderními protějšky.
+
+6. **Grafické rozhraní (WinForms)**  
+   Umožňuje interaktivní zpracování textu a práci s modelem.
+
+---
+
+## 🛠️ Projektová struktura
+
+### Řešení
+
+- `BiblickyGenerator.sln` – hlavní Visual Studio řešení.
+
+### Hlavní projekt: `BiblickyGenerator`
+
+#### UI komponenty (`*.Designer.cs`, `*.resx`)
+
+- `Inline_paraphrasing`  
+- `Menu`  
+- `TrainNewModel`  
+- `ReadCount`  
+- `Word2VecModelCreate`  
+
+➡ Zajišťují interaktivní práci s aplikací (načítání modelů, výběr textů, trénink).
+
+#### Jádro aplikace
+
+| Soubor | Popis |
+|--------|-------|
+| `Program.cs` | Vstupní bod aplikace |
+| `Word2Vec.cs` | Obsluha Word2Vec modelu (využívá `Word2Vec.Net.dll`) |
+| `TransformTXTFile.cs` | Transformace biblického textu |
+| `MorphoDiTa.cs` | Napojení na knihovnu MorphoDiTa (morfologická analýza) |
+| `ParaphraseText.cs` | Logika pro nahrazování slov na základě Word2Vec |
+| `DirectoryManager.cs` | Správa vstupních/výstupních souborů a adresářů |
+| `Window.cs` | Hlavní okno aplikace nebo řídící logika |
+
+---
+
+## Požadavky
+
+- .NET Framework (verze dle projektu)
+- Word2Vec.Net knihovna
+- (Volitelně) MorphoDiTa knihovna od ÚFALu
+
+---
+
+## Licence
+
+Tento projekt je určen pro studijní účely. Případné další použití konzultujte s autorem.
+
+---
+
+## Autor
+
+Ondřej Michálek  
+[Tricerator on GitHub](https://github.com/Tricerator)
