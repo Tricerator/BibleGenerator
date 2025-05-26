@@ -2,7 +2,7 @@
 
 **BibleGenerator** je nástroj vytvořený jako bakalářská práce na MFF UK, který slouží k modernizaci biblického textu pomocí metod z oblasti zpracování přirozeného jazyka (NLP). Projekt využívá model **Word2Vec** k hledání významově blízkých slov a **MorphoDiTa** k morfologické analýze. Aplikace má grafické rozhraní ve Windows Forms.
 
----
+
 
 ## Funkce programu
 
@@ -24,9 +24,9 @@
 6. **Grafické rozhraní (WinForms)**  
    Umožňuje interaktivní zpracování textu a práci s modelem.
 
----
 
-## 🛠️ Projektová struktura
+
+## Projektová struktura
 
 ### Řešení
 
@@ -42,7 +42,7 @@
 - `ReadCount`  
 - `Word2VecModelCreate`  
 
-➡ Zajišťují interaktivní práci s aplikací (načítání modelů, výběr textů, trénink).
+-> Zajišťují interaktivní práci s aplikací (načítání modelů, výběr textů, trénink).
 
 #### Jádro aplikace
 
@@ -56,7 +56,7 @@
 | `DirectoryManager.cs` | Správa vstupních/výstupních souborů a adresářů |
 | `Window.cs` | Hlavní okno aplikace nebo řídící logika |
 
----
+
 
 ## Požadavky
 
@@ -64,13 +64,13 @@
 - Word2Vec.Net knihovna
 - (Volitelně) MorphoDiTa knihovna od ÚFALu
 
----
+
 
 ## Licence
 
 Tento projekt je určen pro studijní účely. Případné další použití konzultujte s autorem.
 
----
+
 
 ## Autor
 
