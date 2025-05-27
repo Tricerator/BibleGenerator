@@ -1,4 +1,4 @@
-# BibleGenerator
+# BibleGenerator (BibleParaphraser)
 
 **BibleGenerator** je nástroj vytvořený jako bakalářská práce na MFF UK, který slouží k modernizaci biblického textu pomocí metod z oblasti zpracování přirozeného jazyka (NLP). Projekt využívá model **Word2Vec** k hledání významově blízkých slov a **MorphoDiTa** k morfologické analýze. Aplikace má grafické rozhraní ve Windows Forms.
 
